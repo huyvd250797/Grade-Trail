@@ -1,5 +1,12 @@
 # Grade Trail — Changelog
 
+## V0.3.0 — Educational Content Studio
+
+- Thêm Studio biên soạn và xem trước học liệu văn bản có liên kết với danh mục chương trình.
+- Thêm luồng lưu nháp, gửi duyệt, trả bài kèm góp ý và duyệt xuất bản; kiểm tra vai trò và xung đột qua RPC Supabase.
+- Thêm kho công khai cho bài đã xuất bản, có thể truy cập từ từng yêu cầu cần đạt.
+- Thêm migration cấu trúc Studio và 107 mã yêu cầu cần đạt. Cần cấu hình Supabase để sử dụng học liệu trực tuyến.
+
 ## V0.2.0 — Curriculum Master Data
 
 - Thêm mục Chương trình với danh mục môn và hoạt động lớp 1–12 theo CTGDPT 2018.

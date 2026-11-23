@@ -1,4 +1,4 @@
-# Grade Trail V0.2.0 — Curriculum Master Data
+# Grade Trail V0.3.0 — Educational Content Studio
 
 Grade Trail là không gian tự học dành cho học sinh Việt Nam từ lớp 1 đến lớp 12. Tên gọi thể hiện lộ trình học từng bước, từ tiểu học đến hết trung học phổ thông.
 
@@ -8,7 +8,7 @@ Bộ dữ liệu v1.0.0 bao phủ danh mục khung lớp 1–12. Phần chủ đ
 
 Cấu trúc dữ liệu nằm trong `lib/curriculum.ts`, nội dung tóm lược trong `lib/curriculum-outcomes.ts`. Giữ mã khối–môn–chủ đề–yêu cầu ổn định khi cập nhật cách diễn đạt để phiên bản CMS có thể tham chiếu. Tăng phiên bản bộ dữ liệu khi thay đổi nội dung hoặc phạm vi.
 
-Không cần tài khoản, biến môi trường, Supabase hay migration. Lớp vừa mở và bài đã hoàn thành được lưu trong trình duyệt bằng localStorage. Tiến độ gắn với trình duyệt và địa chỉ app đang dùng, có thể mất khi xóa dữ liệu trình duyệt hoặc đổi thiết bị.
+Các bài mẫu và danh mục chương trình hoạt động khi chưa cấu hình Studio. Lớp vừa mở và bài đã hoàn thành được lưu trong trình duyệt bằng localStorage. Tiến độ gắn với trình duyệt và địa chỉ app đang dùng, có thể mất khi xóa dữ liệu trình duyệt hoặc đổi thiết bị.
 
 ## Chạy trên máy
 
@@ -31,6 +31,26 @@ npm start
 ```
 
 Dừng `npm run dev` trước khi chạy `npm start` nếu cổng 3000 đang được dùng. Bản build tạo thư mục `out` và tự sinh service worker dựa vào nội dung của bản build.
+
+## Kết nối Educational Content Studio với Supabase
+
+1. Tạo hoặc chọn một dự án Supabase cho Grade Trail. Chạy toàn bộ file `supabase/migrations/202611240001_educational_content_studio.sql` trong **SQL Editor** một lần. Với Supabase CLI, áp dụng chính migration đó qua quy trình migrations của dự án.
+2. Trong **Authentication → Users**, tạo hai tài khoản nhân sự với email/mật khẩu và xác nhận email theo cấu hình dự án. Sao chép UUID của hai tài khoản.
+3. Chạy đoạn SQL bên dưới sau khi thay UUID thật. Vai trò `author` được tạo, sửa, xem trước và gửi bài của mình. Vai trò `reviewer` được đọc bài gửi duyệt, trả bài có góp ý hoặc duyệt và công bố. Việc cấp vai trò thực hiện ở SQL Editor; đăng nhập vào ứng dụng không tự cấp quyền.
+
+```sql
+insert into public.studio_members (user_id, role)
+values
+  ('UUID_CUA_TAC_GIA', 'author'),
+  ('UUID_CUA_NGUOI_DUYET', 'reviewer');
+```
+
+4. Sao chép `.env.example` thành `.env.local`. Điền URL dự án và **publishable key**. Đây là hai biến dùng ở trình duyệt; không đưa secret hoặc service role key vào biến `NEXT_PUBLIC_*`.
+5. Chạy lại local hoặc build lại ứng dụng. Nếu dùng Vercel, thêm hai biến vào **Settings → Environment Variables**, sau đó redeploy để Next.js đưa cấu hình vào bản build tĩnh.
+6. Mở **Học liệu → Studio**. Tác giả chọn lớp, môn, yêu cầu cần đạt và nhập nội dung, rồi **Xem trước → Lưu nháp → Gửi duyệt**. Người duyệt chọn bài đang chờ, sau đó **Trả bài** kèm góp ý hoặc **Duyệt và xuất bản**. Tác giả có thể sửa bài bị trả và gửi lại.
+7. Mở cửa sổ riêng tư và vào **Học liệu**, hoặc mở một yêu cầu cần đạt trong **Chương trình** và chọn liên kết học liệu. Học sinh đọc bài đã xuất bản mà không cần tài khoản. Học liệu Studio đồng bộ qua mạng; PWA tiếp tục tra cứu ngoại tuyến danh mục và bài mẫu sẵn có.
+
+Migration tạo bảng vai trò, bảng mã yêu cầu cần đạt và bảng học liệu; ban đầu có 107 mã tham chiếu từ bộ dữ liệu V0.2.0. Các lệnh ghi đi qua RPC kiểm tra vai trò, trạng thái và số phiên bản của bản ghi để tránh ghi đè khi có thao tác đồng thời. Bản đã xuất bản được khoá chỉnh sửa trong Studio V0.3.0.
 
 ## Cài PWA và kiểm tra ngoại tuyến
 
@@ -64,4 +84,4 @@ Với repo đã có nội dung, clone repo, mở nhánh tích hợp và đưa so
 
 ## Nâng cấp tiếp theo
 
-Gửi lại ZIP phiên bản mới nhất và yêu cầu triển khai **V0.3.0 — Educational Content Studio**. Xem chi tiết trong `ROADMAP.md`.
+Gửi lại ZIP phiên bản mới nhất và yêu cầu triển khai **V0.4.0 — Interactive Lesson Engine**. Xem chi tiết trong `ROADMAP.md`.

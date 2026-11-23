@@ -1,6 +1,6 @@
 {
   "name": "grade-trail",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "engines": {
     "node": ">=22"
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@fontsource-variable/plus-jakarta-sans": "5.3.0",
+    "@supabase/supabase-js": "2.119.2",
     "lucide-react": "1.78.0",
     "next": "16.4.6",
     "react": "19.3.1",

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ArrowDown, ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, CircleHelp, Compass, Download, GraduationCap, House, Layers3, MonitorDown, Radio, Smartphone, Sprout, X } from "lucide-react";
+import { ContentStudio, PublishedLibrary } from "./content-studio";
 import { CurriculumBrowser } from "./curriculum-browser";
 import { grades, lessons, stages, type Grade } from "../lib/lessons";
 
@@ -140,13 +141,14 @@ export function StudySpace() {
   const grade = isGrade(gradeNumber) ? gradeNumber : null;
   const curriculumMatch = /^#chuong-trinh(?:-(\d+))?$/.exec(hash);
   const curriculumGrade = Number(curriculumMatch?.[1]);
-  const active = curriculumMatch ? "curriculum" : hash === "#lop" || grade ? "grades" : hash === "#tien-do" ? "progress" : "home";
+  const libraryMatch = /^#hoc-lieu(?:\/([a-z0-9-]+))?$/.exec(hash);
+  const active = hash === "#studio" ? "studio" : libraryMatch ? "library" : curriculumMatch ? "curriculum" : hash === "#lop" || grade ? "grades" : hash === "#tien-do" ? "progress" : "home";
   const [installEvent, setInstallEvent] = useState<InstallEvent | null>(null);
   const [offlineReady, setOfflineReady] = useState(false);
   const [installed, setInstalled] = useState(false);
   const installDialog = useRef<HTMLDialogElement>(null);
   const main = useRef<HTMLElement>(null);
-  const viewKey = active === "curriculum" ? hash : grade ?? active;
+  const viewKey = active === "curriculum" || active === "library" ? hash : grade ?? active;
   const lastView = useRef(viewKey);
 
   useEffect(() => {
@@ -210,17 +212,18 @@ export function StudySpace() {
         <a href="#" aria-current={active === "home" ? "page" : undefined}><House size={19} /> <span>Trang chủ</span></a>
         <a href="#lop" aria-current={active === "grades" ? "page" : undefined}><Compass size={19} /> <span>Khám phá lớp</span></a>
         <a href="#chuong-trinh" aria-current={active === "curriculum" ? "page" : undefined}><Layers3 size={19} /> <span>Chương trình</span></a>
+        <a href="#hoc-lieu" aria-current={active === "library" || active === "studio" ? "page" : undefined}><BookOpen size={19} /> <span>Học liệu</span></a>
         <a href="#tien-do" aria-current={active === "progress" ? "page" : undefined}><BookOpen size={19} /> <span>Tiến độ của em</span></a>
       </nav>
       <div className="sidebar-bottom">
         <button type="button" className="sidebar-install" onClick={showInstall}><Download size={18} /> Cài ứng dụng</button>
-        <p>Grade Trail <span>·</span> V0.2.0</p>
+        <p>Grade Trail <span>·</span> V0.3.0</p>
       </div>
     </aside>
     <div className="workspace">
       <header className="topbar">
         <div className="compact-brand"><Brand /></div>
-        <p className="breadcrumb"><span>Không gian học tập</span><ChevronRight size={15} />{active === "home" ? "Trang chủ" : active === "grades" ? grade ? "Lớp " + grade : "Khám phá lớp" : active === "curriculum" ? "Chương trình" : "Tiến độ của em"}</p>
+        <p className="breadcrumb"><span>Không gian học tập</span><ChevronRight size={15} />{active === "home" ? "Trang chủ" : active === "grades" ? grade ? "Lớp " + grade : "Khám phá lớp" : active === "curriculum" ? "Chương trình" : active === "studio" ? "Studio" : active === "library" ? "Học liệu" : "Tiến độ của em"}</p>
         <button className="install-button" type="button" onClick={showInstall}><Download size={16} /> <span>{installed ? "Ứng dụng" : "Cài ứng dụng"}</span></button>
       </header>
       <main ref={main} tabIndex={-1} id="noi-dung" className="main">
@@ -242,6 +245,8 @@ export function StudySpace() {
         {active === "grades" && (grade ? <Practice key={grade} grade={grade} done={progress.done.includes(grade)} /> :
           <div className="inner-view"><GradeGrid done={progress.done} full /></div>)}
         {active === "curriculum" && <CurriculumBrowser key={hash} initialGrade={isGrade(curriculumGrade) ? curriculumGrade : progress.lastGrade ?? 1} />}
+        {active === "studio" && <ContentStudio />}
+        {active === "library" && <PublishedLibrary key={hash} outcomeId={libraryMatch?.[1]} />}
         {active === "progress" && <section className="inner-view progress-view" aria-labelledby="progress-title">
           <p className="eyebrow">Luyện tập</p>
           <h1 id="progress-title">Tiến độ của em</h1>
@@ -254,7 +259,7 @@ export function StudySpace() {
             <li key={item}><a href={"#lop-" + item}><Check size={18} /><span><strong>{lessons[item].title}</strong><small>Lớp {item} · {lessons[item].subject}</small></span><ArrowRight size={17} /></a></li>
           )}</ul> : <div className="empty-state"><BookOpen size={26} /><h2>Em chưa hoàn thành bài mẫu nào</h2><a href="#lop" className="button primary">Chọn lớp <ArrowRight size={16} /></a></div>}
         </section>}
-        <footer className="footer"><span>Grade Trail · V0.2.0</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
+        <footer className="footer"><span>Grade Trail · V0.3.0</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
       </main>
     </div>
     <dialog ref={installDialog} className="install-dialog" aria-labelledby="install-title">
