@@ -9,4 +9,4 @@ createServer((request, response) => serve(request, response, {
   public: output,
   cleanUrls: false,
   headers: [{ source: "sw.js", headers: [{ key: "Cache-Control", value: "no-cache" }] }],
-})).listen(port, "0.0.0.0", () => console.log("Học Trình: http://localhost:" + port));
+})).listen(port, "0.0.0.0", () => console.log("Grade Trail: http://localhost:" + port));

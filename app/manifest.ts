@@ -5,8 +5,8 @@ export const dynamic = "force-static";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "Học Trình",
-    short_name: "Học Trình",
+    name: "Grade Trail",
+    short_name: "Grade Trail",
     description: "Không gian tự học cho học sinh lớp 1–12.",
     lang: "vi",
     start_url: "/",

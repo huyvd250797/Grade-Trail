@@ -20,5 +20,5 @@ for (const path of paths) {
 
 const urls = paths.map((path) => path === "index.html" ? "/" : "/" + path);
 await writeFile(join(output, "sw.js"), template
-  .replace("__CACHE_NAME__", "nachoc-" + hash.digest("hex").slice(0, 16))
+  .replace("__CACHE_NAME__", "gradetrail-" + hash.digest("hex").slice(0, 16))
   .replace("__PRECACHE__", JSON.stringify(urls)));

@@ -1,8 +1,16 @@
-# Học Trình — Changelog
+# Grade Trail — Changelog
+
+## V0.2.0 — Curriculum Master Data
+
+- Thêm mục Chương trình với danh mục môn và hoạt động lớp 1–12 theo CTGDPT 2018.
+- Thêm bộ lọc khối, môn và tìm kiếm có dấu hoặc không dấu. Hiển thị chủ đề, yêu cầu cần đạt tiêu biểu, loại môn và nguồn đối chiếu.
+- Đặt phiên bản dữ liệu và mã ổn định cho từng chủ đề, yêu cầu cần đạt để CMS có thể tham chiếu.
+- Đổi tên hiển thị thành Grade Trail. Giữ định danh PWA và khóa tiến độ để người dùng trên cùng địa chỉ nâng cấp được.
+- Đóng gói dữ liệu tra cứu trong bản PWA ngoại tuyến. Phiên bản này không yêu cầu migration.
 
 ## V0.1.0 — Foundation & PWA
 
-- Đưa vào nhận diện Học Trình, biểu tượng bậc thang và giao diện tiếng Việt.
+- Đưa vào nhận diện ban đầu, biểu tượng bậc thang và giao diện tiếng Việt.
 - Tạo trang chủ, bộ chọn 12 khối lớp theo 3 cấp học và màn hình tiến độ.
 - Thêm 12 bài mẫu gốc, phần ghi nhớ, câu hỏi, phản hồi và lưu kết quả đúng trên trình duyệt.
 - Hỗ trợ cài PWA qua manifest và icon, cùng bộ nhớ ngoại tuyến sinh từ bản build production.
