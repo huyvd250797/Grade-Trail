@@ -1,5 +1,11 @@
 # Grade Trail — Changelog
 
+## V0.4.0 — Interactive Lesson Engine
+
+- Thêm trình học từng bước, câu hỏi lựa chọn có giải thích, lưu tiến độ cục bộ và học lại.
+- Dùng chung trình học cho 12 bài mẫu, kho học liệu và bản xem trước trong Studio.
+- Thêm định dạng nội dung có bước đọc và câu hỏi trong trường nội dung hiện có. Bài dạng văn bản cũ vẫn mở được. Không có migration mới.
+
 ## V0.3.1 — Vercel Static Export Fix
 
 - Dùng chế độ build tĩnh trên Vercel cho thư mục `out`, giữ bước tạo service worker sau build.

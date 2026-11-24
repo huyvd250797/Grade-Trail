@@ -1,4 +1,4 @@
-# Grade Trail V0.3.1 — Vercel Static Export Fix
+# Grade Trail V0.4.0 — Interactive Lesson Engine
 
 Grade Trail là không gian tự học dành cho học sinh Việt Nam từ lớp 1 đến lớp 12. Tên gọi thể hiện lộ trình học từng bước, từ tiểu học đến hết trung học phổ thông.
 
@@ -52,6 +52,12 @@ values
 
 Migration tạo bảng vai trò, bảng mã yêu cầu cần đạt và bảng học liệu; ban đầu có 107 mã tham chiếu từ bộ dữ liệu V0.2.0. Các lệnh ghi đi qua RPC kiểm tra vai trò, trạng thái và số phiên bản của bản ghi để tránh ghi đè khi có thao tác đồng thời. Bản đã xuất bản được khoá chỉnh sửa trong Studio V0.3.0.
 
+## Học theo từng bước
+
+- Mở một bài mẫu từ **Khám phá lớp**, hoặc chọn **Học liệu → Mở bài học** với bài đã xuất bản. Đọc từng phần, trả lời câu hỏi, xem phản hồi và bấm **Hoàn thành**. Khi mở lại cùng bài trên cùng trình duyệt, app trở lại vị trí đã lưu. Sau khi hoàn thành có thể chọn **Học lại**.
+- Bài văn bản từ V0.3.x được chia theo các đoạn ngăn bằng dòng trống. Khi soạn bài tương tác trong **Studio**, mở **Soạn bài theo bước và thêm câu hỏi** để xem hoặc chèn mẫu. Dòng đầu phải là `@grade-trail/lesson-v1`. Bước đọc bắt đầu bằng `## Tên bước`; câu hỏi nằm giữa `:::quiz` và `:::`, có 2–6 đáp án, đúng một dòng `- [x]` và dòng cuối `Giải thích: …`. Nút **Xem trước** mở cùng trình học và không ghi tiến độ của học sinh.
+- Tiến độ trình học lưu cục bộ. Bài mẫu có sẵn ngoại tuyến sau khi PWA chuẩn bị xong. Kho bài đã xuất bản vẫn lấy từ Supabase khi có mạng. Không có migration mới; nội dung từng bước sử dụng trường nội dung hiện có.
+
 ## Cài PWA và kiểm tra ngoại tuyến
 
 1. Mở bản production tại `localhost` hoặc một địa chỉ HTTPS. Khi thử trên điện thoại, dùng địa chỉ HTTPS, vì IP LAN qua HTTP có thể không đủ điều kiện đăng ký service worker.
@@ -90,4 +96,4 @@ Nếu đã chạy migration Studio V0.3.0, không cần chạy lại. Nếu chư
 
 ## Nâng cấp tiếp theo
 
-Gửi lại ZIP phiên bản mới nhất và yêu cầu triển khai **V0.4.0 — Interactive Lesson Engine**. Xem chi tiết trong `ROADMAP.md`.
+Gửi lại ZIP phiên bản mới nhất và yêu cầu triển khai **V0.5.0 — Educational Games**. Xem chi tiết trong `ROADMAP.md`.

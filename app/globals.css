@@ -252,3 +252,14 @@ progress { width: 100%; accent-color: var(--purple); }
 @media (max-width: 650px) {
   .studio-grid, .studio-public { grid-template-columns: 1fr; }
 }
+
+.lesson-player { display: grid; gap: 13px; min-width: 0; margin: 14px 0 0; padding: clamp(14px, 3vw, 22px); border: 1px solid var(--line); border-radius: 17px; background: var(--white); overflow-wrap: anywhere; }
+.lesson-player h3 { font-size: 20px; }
+.lesson-player fieldset { min-width: 0; }
+.lesson-player legend { padding: 0; }
+.lesson-player .studio-body { line-height: 1.7; }
+.lesson-progress { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; color: var(--purple-deep); font-weight: 750; font-size: 13px; }
+.lesson-progress progress { width: min(210px, 100%); height: 12px; accent-color: var(--purple); }
+.lesson-actions { margin-top: 4px; }
+.lesson-format-help summary { color: var(--purple-deep); cursor: pointer; font-weight: 700; }
+.lesson-format-help pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 10px; background: #f3eaff; border-radius: 10px; font-size: 12px; }

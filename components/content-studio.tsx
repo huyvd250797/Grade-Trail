@@ -1,19 +1,23 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import { LessonPlayer } from "./lesson-player";
+import { lessonTemplate, parseLessonBody } from "../lib/lesson-engine";
 import { grades, type Grade } from "../lib/lessons";
 import { lessonStatus, studioClient, studioError, studioOutcomeById, studioOutcomes, type Draft, type PublishedLesson, type StudioLesson, type StudioRole } from "../lib/content-studio";
 
 const emptyDraft: Draft = { title: "", summary: "", body: "", outcome_id: "" };
 
-function LessonPreview({ lesson }: { lesson: Draft }) {
+function LessonPreview({ lesson, storageId }: { lesson: Draft; storageId?: string }) {
   const outcome = studioOutcomeById.get(lesson.outcome_id);
+  const parsed = parseLessonBody(lesson.body);
   return <article className="studio-panel studio-preview">
     {outcome && <p className="eyebrow">Lớp {outcome.grade} · {outcome.subject}</p>}
     <h2>{lesson.title || "Bài học chưa có tiêu đề"}</h2>
     <p>{lesson.summary}</p>
     {outcome && <p className="studio-objective"><strong>{outcome.topic}</strong><br />{outcome.text}</p>}
-    <div className="studio-body">{lesson.body}</div>
+    {parsed.error ? <><p className="studio-error" role="alert">{parsed.error}</p><div className="studio-body">{lesson.body}</div></> :
+      <LessonPlayer steps={parsed.steps} storageId={storageId} />}
   </article>;
 }
 
@@ -174,6 +178,13 @@ function StudioEditor({ lesson, role, onSave, onClose }: {
       setError("Nhập đủ tiêu đề, tóm tắt, nội dung và yêu cầu cần đạt.");
       return;
     }
+    if (action === "save" || action === "submit" || action === "publish") {
+      const issue = parseLessonBody(action === "save" ? draft.body : lesson!.body).error;
+      if (issue) {
+        setError(issue);
+        return;
+      }
+    }
     setBusy(true);
     try {
       const result = action === "save"
@@ -212,6 +223,12 @@ function StudioEditor({ lesson, role, onSave, onClose }: {
       <label>Yêu cầu cần đạt<select required value={draft.outcome_id} onChange={(event) => change("outcome_id", event.target.value)}>
         <option value="">Chọn yêu cầu cần đạt</option>{available.map((item) => <option key={item.id} value={item.id}>{item.topic} — {item.text}</option>)}
       </select></label>
+      <details className="lesson-format-help">
+        <summary>Soạn bài theo bước và thêm câu hỏi</summary>
+        <p>Đặt mã định dạng ở dòng đầu, dùng tiêu đề cho từng bước và đánh dấu đúng một đáp án. Xem mẫu dưới đây hoặc chèn mẫu vào bài mới.</p>
+        <pre>{lessonTemplate}</pre>
+        <button type="button" className="button secondary" disabled={!!draft.body.trim()} onClick={() => change("body", lessonTemplate)}>Chèn mẫu vào nội dung trống</button>
+      </details>
       <label>Nội dung bài học<textarea required maxLength={16000} rows={10} value={draft.body} onChange={(event) => change("body", event.target.value)} /></label>
     </> : <LessonPreview lesson={draft} />}
     {role === "reviewer" && lesson?.status === "in_review" && <label>Góp ý khi trả bài<textarea maxLength={2000} rows={3} value={note} onChange={(event) => setNote(event.target.value)} /></label>}
@@ -273,9 +290,9 @@ export function PublishedLibrary({ outcomeId }: { outcomeId?: string }) {
         }}>Thử lại</button></div>}
         {loading && <p role="status">Đang tải học liệu…</p>}
         {!loading && !error && !rows.length && <p className="studio-panel">Chưa có học liệu đã xuất bản{outcome ? " cho yêu cầu này" : ""}.</p>}
-        {selected ? <><button className="button secondary" onClick={() => setSelected(null)}>Về danh sách</button><LessonPreview lesson={selected} /></> :
+        {selected ? <><button className="button secondary" onClick={() => setSelected(null)}>Về danh sách</button><LessonPreview key={selected.id} lesson={selected} storageId={"published:" + selected.id + ":" + selected.published_at} /></> :
           <div className="studio-public">{rows.map((row) => <article className="studio-panel" key={row.id}>
-            <h2>{row.title}</h2><p>{row.summary}</p><button className="button secondary" onClick={() => setSelected(row)}>Đọc bài</button>
+            <h2>{row.title}</h2><p>{row.summary}</p><button className="button secondary" onClick={() => setSelected(row)}>Mở bài học</button>
           </article>)}</div>}
         {hasMore && !loading && !error && !selected && <button className="button secondary" onClick={() => {
           const last = rows.at(-1);

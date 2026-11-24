@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ArrowDown, ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, CircleHelp, Compass, Download, GraduationCap, House, Layers3, MonitorDown, Radio, Smartphone, Sprout, X } from "lucide-react";
 import { ContentStudio, PublishedLibrary } from "./content-studio";
+import { LessonPlayer } from "./lesson-player";
 import { CurriculumBrowser } from "./curriculum-browser";
 import { grades, lessons, stages, type Grade } from "../lib/lessons";
 
@@ -92,10 +93,6 @@ function HeroArtwork() {
 
 function Practice({ grade, done }: { grade: Grade; done: boolean }) {
   const lesson = lessons[grade];
-  const [selected, setSelected] = useState<number | null>(null);
-  const [checked, setChecked] = useState(false);
-  const correct = selected === lesson.correct;
-
   return <section className="practice" aria-labelledby="lesson-title">
     <div className="practice-links"><a href="#lop" className="back-link"><ArrowLeft size={17} /> Quay lại chọn lớp</a><a href={"#chuong-trinh-" + grade} className="back-link">Chương trình lớp {grade} <ArrowRight size={16} /></a></div>
     <div className="practice-heading">
@@ -103,33 +100,10 @@ function Practice({ grade, done }: { grade: Grade; done: boolean }) {
       <h1 id="lesson-title">{lesson.title}</h1>
       {done && <p className="lesson-done"><Check size={17} /> Đã hoàn thành bài này</p>}
     </div>
-    <div className="concept"><BookOpen size={23} /><div><h2>Ghi nhớ</h2><p>{lesson.concept}</p></div></div>
-    <form className="question" onSubmit={(event) => {
-      event.preventDefault();
-      if (selected === null) return;
-      setChecked(true);
-      if (correct) saveProgress((existing) => ({ lastGrade: grade, done: [...new Set([...existing.done, grade])] }));
-    }}>
-      <fieldset>
-        <legend>{lesson.question}</legend>
-        {lesson.options.map((option, index) => <label className="option" key={option}>
-          <input type="radio" name="answer" checked={selected === index} onChange={() => {
-            setSelected(index);
-            setChecked(false);
-          }} />
-          <span>{option}</span>
-        </label>)}
-      </fieldset>
-      <div aria-live="polite" aria-atomic="true">
-        {checked && <p className={correct ? "feedback correct" : "feedback retry"}>
-          {correct ? "Chính xác! " + lesson.explanation : "Chưa đúng. Em hãy đọc lại phần ghi nhớ và thử đáp án khác."}
-        </p>}
-      </div>
-      <div className="form-actions">
-        <a className="button secondary" href="#lop">Chọn lớp</a>
-        <button className="button primary" disabled={selected === null || checked}>Kiểm tra đáp án</button>
-      </div>
-    </form>
+    <LessonPlayer storageId={"sample:" + grade} steps={[
+      { kind: "reading", title: "Ghi nhớ", text: lesson.concept },
+      { kind: "quiz", question: lesson.question, options: lesson.options, correct: lesson.correct, explanation: lesson.explanation },
+    ]} onComplete={() => saveProgress((existing) => ({ lastGrade: grade, done: [...new Set([...existing.done, grade])] }))} />
   </section>;
 }
 
@@ -217,7 +191,7 @@ export function StudySpace() {
       </nav>
       <div className="sidebar-bottom">
         <button type="button" className="sidebar-install" onClick={showInstall}><Download size={18} /> Cài ứng dụng</button>
-        <p>Grade Trail <span>·</span> V0.3.1</p>
+        <p>Grade Trail <span>·</span> V0.4.0</p>
       </div>
     </aside>
     <div className="workspace">
@@ -259,7 +233,7 @@ export function StudySpace() {
             <li key={item}><a href={"#lop-" + item}><Check size={18} /><span><strong>{lessons[item].title}</strong><small>Lớp {item} · {lessons[item].subject}</small></span><ArrowRight size={17} /></a></li>
           )}</ul> : <div className="empty-state"><BookOpen size={26} /><h2>Em chưa hoàn thành bài mẫu nào</h2><a href="#lop" className="button primary">Chọn lớp <ArrowRight size={16} /></a></div>}
         </section>}
-        <footer className="footer"><span>Grade Trail · V0.3.1</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
+        <footer className="footer"><span>Grade Trail · V0.4.0</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
       </main>
     </div>
     <dialog ref={installDialog} className="install-dialog" aria-labelledby="install-title">
