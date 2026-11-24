@@ -1,4 +1,4 @@
-# Grade Trail V0.3.0 — Educational Content Studio
+# Grade Trail V0.3.1 — Vercel Static Export Fix
 
 Grade Trail là không gian tự học dành cho học sinh Việt Nam từ lớp 1 đến lớp 12. Tên gọi thể hiện lộ trình học từng bước, từ tiểu học đến hết trung học phổ thông.
 
@@ -78,9 +78,15 @@ git push -u origin main
 Với repo đã có nội dung, clone repo, mở nhánh tích hợp và đưa source vào đúng thư mục dự án. Nếu gặp `fetch first`, fetch và tích hợp thay đổi từ remote trước khi push.
 
 1. Trong Vercel, chọn **Add New → Project**, rồi import repo GitHub và đặt production branch là `main` hoặc nhánh Boss đang dùng.
-2. Chọn thư mục chứa `package.json` làm **Root Directory**. `vercel.json` đặt framework Next.js, lệnh build `npm run build` và thư mục xuất `out`. Chọn Node.js 22.x hoặc 24.x.
+2. Chọn thư mục chứa cả `package.json` và `vercel.json` làm **Root Directory**. Trong **Build and Deployment**, dùng **Framework Preset: Other**, **Build Command: `npm run build`** và **Output Directory: `out`**. Chọn Node.js 22.x hoặc 24.x. Bản này đã ghi các giá trị build tương ứng trong `vercel.json`.
 3. Deploy, mở URL HTTPS và kiểm tra trang chủ, chọn lớp, tiến độ và trạng thái ngoại tuyến.
 4. Lần sau, push vào production branch để Vercel triển khai. Có thể rollback về bản deploy trước trong Vercel khi cần. Tiến độ hiện tại ở trình duyệt, vì vậy giữ cùng tên miền khi nâng phiên bản.
+
+### Sửa lỗi `NEXT_NO_ROUTES_MANIFEST` khi nâng từ V0.3.0
+
+V0.3.1 xuất trang tĩnh vào `out` và tạo `sw.js` sau bước Next.js build. Chọn **Other** để Vercel phục vụ thư mục xuất tĩnh. Cập nhật repo và triển khai commit mới nhất chứa `vercel.json`, vì Redeploy một deployment cũ sẽ dùng source của commit cũ.
+
+Nếu đã chạy migration Studio V0.3.0, không cần chạy lại. Nếu chưa thiết lập Studio, dùng migration đó theo hướng dẫn ở trên.
 
 ## Nâng cấp tiếp theo
 

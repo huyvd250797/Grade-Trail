@@ -217,7 +217,7 @@ export function StudySpace() {
       </nav>
       <div className="sidebar-bottom">
         <button type="button" className="sidebar-install" onClick={showInstall}><Download size={18} /> Cài ứng dụng</button>
-        <p>Grade Trail <span>·</span> V0.3.0</p>
+        <p>Grade Trail <span>·</span> V0.3.1</p>
       </div>
     </aside>
     <div className="workspace">
@@ -259,7 +259,7 @@ export function StudySpace() {
             <li key={item}><a href={"#lop-" + item}><Check size={18} /><span><strong>{lessons[item].title}</strong><small>Lớp {item} · {lessons[item].subject}</small></span><ArrowRight size={17} /></a></li>
           )}</ul> : <div className="empty-state"><BookOpen size={26} /><h2>Em chưa hoàn thành bài mẫu nào</h2><a href="#lop" className="button primary">Chọn lớp <ArrowRight size={16} /></a></div>}
         </section>}
-        <footer className="footer"><span>Grade Trail · V0.3.0</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
+        <footer className="footer"><span>Grade Trail · V0.3.1</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
       </main>
     </div>
     <dialog ref={installDialog} className="install-dialog" aria-labelledby="install-title">

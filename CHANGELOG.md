@@ -1,5 +1,11 @@
 # Grade Trail — Changelog
 
+## V0.3.1 — Vercel Static Export Fix
+
+- Dùng chế độ build tĩnh trên Vercel cho thư mục `out`, giữ bước tạo service worker sau build.
+- Cập nhật hướng dẫn deploy để xử lý `NEXT_NO_ROUTES_MANIFEST`.
+- Không có migration mới.
+
 ## V0.3.0 — Educational Content Studio
 
 - Thêm Studio biên soạn và xem trước học liệu văn bản có liên kết với danh mục chương trình.
