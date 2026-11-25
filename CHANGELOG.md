@@ -1,5 +1,12 @@
 # Grade Trail — Changelog
 
+## V0.6.1 — Grade 1 Mathematics
+
+- Thêm lộ trình MVP Toán lớp 1 gồm 10 bài và 20 câu vận dụng.
+- Thêm trò Đường đua số và Ghép tên các hình, dùng chung bộ mini-game hiện có.
+- Lưu tiến độ bài Toán lớp 1 trên thiết bị và đóng gói học liệu cùng PWA.
+- Phục hồi roadmap chính thức đến V2.0.0. Mốc kế tiếp là V0.7.0 — Grade 1 Vietnamese. Không có migration mới.
+
 ## V0.6.0 — Adaptive Practice & Review
 
 - Thêm 56 câu luyện tập cho 24 chủ đề lớp 1–12, lọc lớp, môn, chủ đề và giải thích đáp án.

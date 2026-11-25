@@ -1,4 +1,4 @@
-# Grade Trail V0.6.0 — Adaptive Practice & Review
+# Grade Trail V0.6.1 — Grade 1 Mathematics
 
 Grade Trail là không gian tự học dành cho học sinh Việt Nam từ lớp 1 đến lớp 12. Tên gọi thể hiện lộ trình học từng bước, từ tiểu học đến hết trung học phổ thông.
 
@@ -60,7 +60,7 @@ Migration tạo bảng vai trò, bảng mã yêu cầu cần đạt và bảng h
 
 ## Trò chơi học tập
 
-Chọn **Trò chơi** trên thanh điều hướng, lọc khối lớp hoặc mở từ bài mẫu hay từ yêu cầu cần đạt trong mục **Chương trình**. Có 12 trò, mỗi lớp một trò, thuộc ba dạng: ghép cặp, sắp xếp và trắc nghiệm. Hoàn thành khi ghép, xếp hoặc trả lời đúng toàn bộ; có thể thử lại ngay khi chọn sai và chơi lại sau khi hoàn thành.
+Chọn **Trò chơi** trên thanh điều hướng, lọc khối lớp hoặc mở từ bài mẫu hay từ yêu cầu cần đạt trong mục **Chương trình**. Có 14 trò, trong đó 3 trò dành cho lớp 1, thuộc ba dạng: ghép cặp, sắp xếp và trắc nghiệm. Hoàn thành khi ghép, xếp hoặc trả lời đúng toàn bộ; có thể thử lại ngay khi chọn sai và chơi lại sau khi hoàn thành.
 
 Danh sách lưu dấu hoàn thành trên trình duyệt hiện tại. Khi rời trò chơi giữa chừng, lượt đang chơi bắt đầu lại ở lần mở sau. Bộ trò chơi đã được đóng gói cùng ứng dụng, chạy ngoại tuyến sau khi PWA sẵn sàng và không cần tài khoản, Supabase hay migration mới.
 
@@ -72,6 +72,12 @@ Mở **Ôn tập** từ thanh điều hướng, từ bài mẫu hoặc từ ch�
 - **Ôn tập ưu tiên** đưa câu sai lên đầu và ôn các câu đến hạn. Nếu chưa có câu đến hạn, app đưa câu chưa luyện lên trước. Trả lời sai khiến câu hỏi đến hạn ngay. Các lần đúng liên tiếp dời lịch ôn lần lượt 1, 3, 7 và tối đa 14 ngày.
 - Kết quả xem theo lượt và theo chủ đề. Mỗi đáp án đã chấm được lưu ngay trên trình duyệt hiện tại; khi rời màn hình, lượt đang mở kết thúc nhưng đáp án đã chấm vẫn được tính. Trình duyệt chặn lưu trữ chỉ giữ kết quả trong phiên mở app.
 - Ngân hàng câu hỏi nằm trong gói PWA. Sau khi app sẵn sàng ngoại tuyến, có thể luyện và ôn trên thiết bị. Không có migration mới.
+
+## Toán lớp 1
+
+Mở **Toán lớp 1** từ trang chủ, từ bài mẫu lớp 1 hoặc từ mục **Chương trình** của lớp 1. Lộ trình MVP có 10 bài, chia thành số và thứ tự, cộng trừ và bài toán, hình học, đo lường và thời gian. Mỗi bài gồm ví dụ và 2 câu vận dụng có phản hồi. Trả lời đúng cả hai câu để hoàn thành bài. App lưu bước học và dấu hoàn thành trên trình duyệt hiện tại.
+
+Khu **Trò chơi Toán lớp 1** có Ghép phép tính, Đường đua số và Ghép tên các hình. Bài và trò chạy ngoại tuyến sau khi PWA tải xong tài nguyên. Lộ trình là phần nội dung MVP được chọn, với câu hỏi và ví dụ tự biên soạn. Bản V0.6.1 không có migration mới.
 
 ## Cài PWA và kiểm tra ngoại tuyến
 
@@ -90,7 +96,7 @@ Với repo GitHub mới và rỗng, chạy từ thư mục chứa `package.json`
 ```bash
 git init
 git add .
-git commit -m "Release Grade Trail V0.6.0"
+git commit -m "Release Grade Trail V0.6.1"
 git branch -M main
 git remote add origin https://github.com/TEN-TAI-KHOAN/TEN-REPO.git
 git push -u origin main
@@ -111,4 +117,4 @@ Nếu đã chạy migration Studio V0.3.0, không cần chạy lại. Nếu chư
 
 ## Nâng cấp tiếp theo
 
-Gửi lại ZIP phiên bản mới nhất khi tiếp tục hạng mục trên roadmap. Xem chi tiết trong `ROADMAP.md`.
+Mốc kế tiếp theo roadmap là **V0.7.0 — Grade 1 Vietnamese**: tập đọc, âm vần, ghép chữ, giọng đọc và bài tập tương tác. Xem chi tiết trong `ROADMAP.md`.

@@ -56,6 +56,7 @@ export function CurriculumBrowser({ initialGrade }: { initialGrade: Grade }) {
     <div className="curriculum-toolbar">
       <p role="status">{visible.length} môn và hoạt động · {totalTopics} chủ đề hiển thị</p>
       <a href={"#lop-" + grade}>Làm bài mẫu lớp {grade} <ArrowRight size={15} /></a>
+      {grade === 1 && <a href="#toan-lop-1">Mở lộ trình Toán lớp 1 <ArrowRight size={15} /></a>}
     </div>
     {visible.length ? <div className="curriculum-list">
       {visible.map((subject) => <article key={subject.id} className="curriculum-subject">

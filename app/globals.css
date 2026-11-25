@@ -308,3 +308,16 @@ progress { width: 100%; accent-color: var(--purple); }
   .review-filters { grid-template-columns: minmax(70px,.65fr) minmax(0,1.35fr); }
   .review-filters label:last-child { grid-column: 1 / -1; }
 }
+
+.math-course { max-width: 1030px; }
+.math-lesson { max-width: 760px; }
+.math-course-actions, .math-lesson-next { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 14px 0; }
+.math-course-actions svg { flex: none; }
+.math-unit-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.math-unit ul { list-style: none; padding: 0; margin: 9px 0 0; }
+.math-unit li + li { border-top: 1px solid var(--line); }
+.math-unit li a { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 0; min-height: 44px; }
+.math-unit li a:hover strong { color: var(--purple-deep); text-decoration: underline; }
+.math-unit small { display: block; color: var(--muted); margin-top: 4px; }
+.math-unit .game-solved { white-space: nowrap; }
+@media (max-width: 620px) { .math-unit-grid { grid-template-columns: 1fr; } }

@@ -18,6 +18,11 @@ function question(question: string, options: string[], correct: number, explanat
 
 export const educationalGames = [
   game(1, "sum-pairs", "Ghép phép tính", "math-addition", { kind: "match", pairs: [["3 + 5", "8"], ["7 − 3", "4"], ["10 + 6", "16"], ["9 − 2", "7"]] }),
+  game(1, "grade-one-number-trail", "Đường đua số", "math-number", { kind: "order",
+    prompt: "Chọn các số từ bé đến lớn.", items: ["9", "19", "29", "41", "63"], explanation: "9 có một chữ số. Các số còn lại có số chục tăng dần: 1, 2, 4 và 6." }),
+  game(1, "grade-one-shape-match", "Ghép tên các hình", "math-shapes", { kind: "match",
+    pairs: [["● Hình có đường bao cong", "Hình tròn"], ["▲ Hình ba cạnh", "Hình tam giác"],
+      ["■ Hình bốn cạnh bằng nhau và bốn góc vuông", "Hình vuông"], ["▬ Hình có bốn góc vuông, hai cạnh dài và hai cạnh ngắn", "Hình chữ nhật"]] }),
   game(2, "clock-pairs", "Đồng hồ chỉ mấy giờ?", "math-time", { kind: "match", pairs: [["Kim giờ ở 7, kim phút ở 12", "7 giờ"], ["Kim giờ giữa 9 và 10, kim phút ở 6", "9 giờ 30 phút"], ["Kim giờ vừa qua 2, kim phút ở 3", "2 giờ 15 phút"]] }),
   game(3, "reading-clues", "Thám tử chi tiết", "language-read", { kind: "quiz", questions: [
     question("Chiều thứ ba, Mai mượn một cuốn truyện ở thư viện. Mai đến đâu?", ["Nhà sách", "Thư viện", "Sân trường"], 1, "Cụm «ở thư viện» chỉ nơi Mai mượn sách."),
