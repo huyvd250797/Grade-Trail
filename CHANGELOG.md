@@ -1,5 +1,14 @@
 # Grade Trail — Changelog
 
+## V0.8.0 — Student & Parent Profiles
+
+- Thêm đăng ký, đăng nhập phụ huynh và quản lý nhiều hồ sơ học sinh.
+- Lưu tiến độ riêng cho 10 bài Toán và 13 bài Tiếng Việt lớp 1, tiếp tục đúng bài và bước khi đổi hồ sơ.
+- Thêm báo cáo bài hoàn thành, bài đang học, lần học gần nhất và kết quả gần đây.
+- Thêm xem trước và nhập tiến độ lớp 1 trên thiết bị vào hồ sơ đã chọn. Nhập lại gộp dữ liệu theo bài.
+- Yêu cầu migration `202611250001_student_parent_profiles.sql` trên Supabase để kích hoạt hồ sơ.
+- Mốc kế tiếp là V0.9.0 — Adaptive Learning & Offline.
+
 ## V0.7.0 — Grade 1 Vietnamese
 
 - Thêm 13 bài luyện Tiếng Việt lớp 1 theo thứ tự các mốc chọn lọc của bộ Kết nối tri thức với cuộc sống. Mỗi bài dẫn đến tập sách đối chiếu.

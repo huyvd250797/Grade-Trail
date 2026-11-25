@@ -4,13 +4,16 @@ import { useId, useRef, useState } from "react";
 import { LessonAudio } from "./lesson-audio";
 import { readLessonPosition, type LessonPosition, type LessonStep } from "../lib/lesson-engine";
 
-export function LessonPlayer({ steps, storageId, onComplete }: {
+export function LessonPlayer({ steps, storageId, onComplete, initialPosition, onProgress }: {
   steps: LessonStep[];
   storageId?: string;
   onComplete?: () => void;
+  initialPosition?: LessonPosition;
+  onProgress?: (position: LessonPosition, completed: boolean, result?: boolean) => void;
 }) {
   const storageKey = storageId ? "gradetrail:lesson:v1:" + storageId : undefined;
   const [position, setPosition] = useState<LessonPosition>(() => {
+    if (initialPosition) return initialPosition;
     try {
       return readLessonPosition(storageKey ? window.localStorage.getItem(storageKey) : null, steps.length);
     } catch {
@@ -40,7 +43,9 @@ export function LessonPlayer({ steps, storageId, onComplete }: {
     if (storageKey) {
       try { window.localStorage.setItem(storageKey, JSON.stringify(next)); } catch { /* Continue in this session. */ }
     }
-    if (!reset && index === steps.length && step) onComplete?.();
+    const finished = !reset && index === steps.length;
+    onProgress?.(next, finished);
+    if (finished && step) onComplete?.();
     title.current?.focus();
   }
 
@@ -86,7 +91,7 @@ export function LessonPlayer({ steps, storageId, onComplete }: {
     <div className="studio-actions lesson-actions">
       <button type="button" className="button secondary" disabled={position.current === 0} onClick={() => navigate(position.current - 1)}>Bước trước</button>
       {complete ? <button type="button" className="button primary" onClick={() => navigate(0, true)}>Học lại</button> : <>
-        {scored && !checkedCorrect && <button type="button" className="button secondary" disabled={!ready || checked} onClick={() => setChecked(true)}>Kiểm tra</button>}
+        {scored && !checkedCorrect && <button type="button" className="button secondary" disabled={!ready || checked} onClick={() => { setChecked(true); onProgress?.(position, false, correct); }}>Kiểm tra</button>}
         <button type="button" className="button primary" disabled={scored && !checkedCorrect && position.current >= position.furthest} onClick={() => navigate(position.current + 1)}>
           {position.current === steps.length - 1 ? "Hoàn thành" : "Bước tiếp theo"}
         </button>

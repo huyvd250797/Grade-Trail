@@ -38,4 +38,5 @@ Mục tiêu V1.0.0 là chứng minh ứng dụng có thể dạy đúng kiến t
 - ZIP V0.6.0 đã phát hành với tên Adaptive Practice & Review và có phần ôn tập thích ứng cục bộ. Phạm vi V0.9.0 vẫn bao gồm tải bài ngoại tuyến và đồng bộ tiến độ.
 - V0.6.1 là bản bổ sung Toán lớp 1 cho MVP trên source V0.6.0. Xem phạm vi thực tế trong README và CHANGELOG.
 - V0.7.0 bổ sung Tiếng Việt lớp 1 và đối chiếu học liệu lớp 1 với CTGDPT 2018 và bộ Kết nối tri thức với cuộc sống.
-- Mốc kế tiếp là V0.8.0 — Student & Parent Profiles.
+- V0.8.0 bổ sung hồ sơ gia đình và báo cáo Tiếng Việt, Toán lớp 1.
+- Mốc kế tiếp là V0.9.0 — Adaptive Learning & Offline.

@@ -3,6 +3,8 @@
 import { useSyncExternalStore } from "react";
 import { ArrowLeft, ArrowRight, Check, Gamepad2 } from "lucide-react";
 import { gradeOneMath, mathBooks } from "../lib/grade-one-math";
+import { lessonPosition } from "../lib/family-progress";
+import { useFamily } from "./family-provider";
 import { LessonPlayer } from "./lesson-player";
 
 const storageKey = "gradetrail:grade-one-math:v1";
@@ -37,7 +39,13 @@ function markDone(id: string) {
 }
 
 export function GradeOneMath({ lessonId }: { lessonId?: string }) {
-  const done = readDone(useSyncExternalStore(subscribe, snapshot, () => "[]"));
+  const guestDone = readDone(useSyncExternalStore(subscribe, snapshot, () => "[]"));
+  const family = useFamily();
+  const done = family.student
+    ? family.rows.filter((row) => row.completed && gradeOneMath.some((item) => row.lesson_key === "math/" + item.id)).map((row) => row.lesson_key.slice(5))
+    : guestDone;
+  const lessonKey = "math/" + lessonId;
+  const familyRow = family.rows.find((row) => row.lesson_key === lessonKey);
   const lesson = gradeOneMath.find((item) => item.id === lessonId);
   const next = lesson && gradeOneMath[gradeOneMath.indexOf(lesson) + 1];
 
@@ -49,7 +57,11 @@ export function GradeOneMath({ lessonId }: { lessonId?: string }) {
     <p className="course-reference"><a href={mathBooks[lesson.book].url} target="_blank" rel="noreferrer">
       Đối chiếu SGK · {mathBooks[lesson.book].title} · {lesson.reference}
     </a></p>
-    <LessonPlayer key={lesson.id} steps={lesson.steps} storageId={"grade-one-math:" + lesson.id} onComplete={() => markDone(lesson.id)} />
+    <LessonPlayer key={(family.student?.id ?? "guest") + ":" + lesson.id} steps={lesson.steps}
+        storageId={family.student ? undefined : "grade-one-math:" + lesson.id}
+        initialPosition={family.student ? lessonPosition(familyRow, lesson.steps.length) : undefined}
+        onComplete={family.student ? undefined : () => markDone(lesson.id)}
+        onProgress={family.student ? (position, completed, result) => family.record(lessonKey, position, completed, result) : undefined} />
     {done.includes(lesson.id) && <div className="math-lesson-next">
       <span className="game-solved"><Check size={16} /> Đã hoàn thành</span>
       {next && <a className="button primary" href={"#toan-lop-1/" + next.id}>Bài tiếp theo <ArrowRight size={16} /></a>}

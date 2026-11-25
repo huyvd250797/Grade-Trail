@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ArrowDown, ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, CircleHelp, Compass, Download, Gamepad2, GraduationCap, House, Layers3, MonitorDown, Radio, Smartphone, Sprout, Target, X } from "lucide-react";
+import { FamilyProvider, useFamily } from "./family-provider";
+import { FamilyReport, FamilySaveStatus, FamilySpace } from "./family-space";
+import { familyRoute, resumeLesson } from "../lib/family-progress";
 import { ContentStudio, PublishedLibrary } from "./content-studio";
 import { GradeOneMath } from "./grade-one-math";
 import { GradeOneVietnamese } from "./grade-one-vietnamese";
@@ -117,6 +120,13 @@ function Practice({ grade, done }: { grade: Grade; done: boolean }) {
 }
 
 export function StudySpace() {
+  return <FamilyProvider><StudyWorkspace /></FamilyProvider>;
+}
+
+function StudyWorkspace() {
+  const family = useFamily();
+  const resume = family.student && (family.student.grade === 1 || family.rows.length > 0) ? resumeLesson(family.rows) : undefined;
+
   const hash = useSyncExternalStore(subscribeHash, getHash, () => "");
   const progress = readProgress(useSyncExternalStore(subscribeProgress, progressSnapshot, () => ""));
   const candidate = /^#lop-(\d+)$/.exec(hash);
@@ -131,7 +141,8 @@ export function StudySpace() {
   const reviewGrade = Number(reviewMatch?.[2]);
   const mathMatch = /^#toan-lop-1(?:\/([a-z0-9-]+))?$/.exec(hash);
   const vietnameseMatch = /^#tieng-viet-lop-1(?:\/([a-z0-9-]+))?$/.exec(hash);
-  const active = vietnameseMatch ? "vietnamese" : mathMatch ? "math" : reviewMatch ? "review" : gameMatch ? "games" : hash === "#studio" ? "studio" : libraryMatch ? "library" : curriculumMatch ? "curriculum" : hash === "#lop" || grade ? "grades" : hash === "#tien-do" ? "progress" : "home";
+  const active = hash === familyRoute ? "family" : vietnameseMatch ? "vietnamese" : mathMatch ? "math" : reviewMatch ? "review" : gameMatch ? "games" : hash === "#studio" ? "studio" : libraryMatch ? "library" : curriculumMatch ? "curriculum" : hash === "#lop" || grade ? "grades" : hash === "#tien-do" ? "progress" : "home";
+  const courseLocked = (active === "math" || active === "vietnamese") && (family.loading || (family.account && !family.student));
   const [installEvent, setInstallEvent] = useState<InstallEvent | null>(null);
   const [offlineReady, setOfflineReady] = useState(false);
   const [installed, setInstalled] = useState(false);
@@ -199,7 +210,7 @@ export function StudySpace() {
       <Brand />
       <nav className="nav" aria-label="Điều hướng chính">
         <a href="#" aria-current={active === "home" ? "page" : undefined}><House size={19} /> <span>Trang chủ</span></a>
-        <a href="#lop" aria-current={(active === "grades" || active === "math") ? "page" : undefined}><Compass size={19} /> <span>Khám phá lớp</span></a>
+        <a href="#lop" aria-current={(active === "grades" || (active === "math" || active === "vietnamese")) ? "page" : undefined}><Compass size={19} /> <span>Khám phá lớp</span></a>
         <a href="#chuong-trinh" aria-current={active === "curriculum" ? "page" : undefined}><Layers3 size={19} /> <span>Chương trình</span></a>
         <a href="#hoc-lieu" aria-current={active === "library" || active === "studio" ? "page" : undefined}><BookOpen size={19} /> <span>Học liệu</span></a>
         <a href="#tro-choi" aria-current={active === "games" ? "page" : undefined}><Gamepad2 size={19} /> <span>Trò chơi</span></a>
@@ -208,16 +219,22 @@ export function StudySpace() {
       </nav>
       <div className="sidebar-bottom">
         <button type="button" className="sidebar-install" onClick={showInstall}><Download size={18} /> Cài ứng dụng</button>
-        <p>Grade Trail <span>·</span> V0.7.0</p>
+        <p>Grade Trail <span>·</span> V0.8.0</p>
       </div>
     </aside>
     <div className="workspace">
       <header className="topbar">
         <div className="compact-brand"><Brand /></div>
-        <p className="breadcrumb"><span>Không gian học tập</span><ChevronRight size={15} />{active === "home" ? "Trang chủ" : active === "grades" ? grade ? "Lớp " + grade : "Khám phá lớp" : active === "curriculum" ? "Chương trình" : active === "studio" ? "Studio" : active === "library" ? "Học liệu" : active === "games" ? "Trò chơi" : active === "review" ? "Ôn tập" : active === "math" ? "Toán lớp 1" : active === "vietnamese" ? "Tiếng Việt lớp 1" : "Tiến độ của em"}</p>
-        <button className="install-button" type="button" onClick={showInstall}><Download size={16} /> <span>{installed ? "Ứng dụng" : "Cài ứng dụng"}</span></button>
+        <p className="breadcrumb"><span>Không gian học tập</span><ChevronRight size={15} />{active === "home" ? "Trang chủ" : active === "grades" ? grade ? "Lớp " + grade : "Khám phá lớp" : active === "curriculum" ? "Chương trình" : active === "studio" ? "Studio" : active === "library" ? "Học liệu" : active === "games" ? "Trò chơi" : active === "review" ? "Ôn tập" : active === "family" ? "Gia đình" : active === "math" ? "Toán lớp 1" : active === "vietnamese" ? "Tiếng Việt lớp 1" : "Tiến độ của em"}</p>
+        <div className="topbar-actions">
+          <a className="install-button family-link" href={familyRoute} aria-current={active === "family" ? "page" : undefined}>
+            {family.student ? "Đang học · " + family.student.display_name : "Gia đình"}
+          </a>
+          <button className="install-button" type="button" onClick={showInstall}><Download size={16} /> <span>{installed ? "Ứng dụng" : "Cài ứng dụng"}</span></button>
+        </div>
       </header>
       <main ref={main} tabIndex={-1} id="noi-dung" className="main">
+        <FamilySaveStatus />
         {active === "home" && <>
           <section className="hero" aria-labelledby="home-title">
             <div className="hero-copy">
@@ -225,7 +242,7 @@ export function StudySpace() {
               <h1 id="home-title">Học từng bước,<br /><em>hiểu từng bài.</em></h1>
               <p>Chọn lớp của em, đọc phần ghi nhớ và thử sức với một bài luyện tập ngắn.</p>
               <div className="hero-actions">
-                <a className="button primary" href={progress.lastGrade ? "#lop-" + progress.lastGrade : "#lop"}>{progress.lastGrade ? "Tiếp tục học" : "Bắt đầu học"} <ArrowRight size={18} /></a>
+                <a className="button primary" href={resume ? resume.route : family.student ? "#lop-" + family.student.grade : progress.lastGrade ? "#lop-" + progress.lastGrade : "#lop"}>{resume || progress.lastGrade ? "Tiếp tục học" : "Bắt đầu học"} <ArrowRight size={18} /></a>
                 <a className="button secondary" href="#toan-lop-1">Toán lớp 1</a>
                 <a className="button secondary" href={vietnameseRoute}>Tiếng Việt lớp 1</a>
                 <a className="text-button" href="#chuong-trinh">Xem chương trình <ArrowDown size={15} /></a>
@@ -240,11 +257,18 @@ export function StudySpace() {
         {active === "curriculum" && <CurriculumBrowser key={hash} initialGrade={isGrade(curriculumGrade) ? curriculumGrade : progress.lastGrade ?? 1} />}
         {active === "games" && <GameHub key={hash} gameId={gameMatch?.[1]} initialGrade={isGrade(gameGrade) ? gameGrade : undefined} />}
         {active === "review" && <AdaptivePractice key={hash} initialTopic={reviewMatch?.[1]} initialGrade={isGrade(reviewGrade) ? reviewGrade : progress.lastGrade ?? 1} />}
-        {active === "math" && <GradeOneMath lessonId={mathMatch?.[1]} />}
-        {active === "vietnamese" && <GradeOneVietnamese lessonId={vietnameseMatch?.[1]} />}
+        {courseLocked && <div className="inner-view studio-panel">
+          <h1>{active === "math" ? "Toán lớp 1" : "Tiếng Việt lớp 1"}</h1>
+          {family.loading ? <p role="status">Đang tải hồ sơ học sinh…</p> :
+            <a className="button primary" href={familyRoute}>Chọn hồ sơ học sinh <ArrowRight size={16} /></a>}
+        </div>}
+        {active === "family" && <FamilySpace />}
+        {active === "math" && !courseLocked && <GradeOneMath lessonId={mathMatch?.[1]} />}
+        {active === "vietnamese" && !courseLocked && <GradeOneVietnamese lessonId={vietnameseMatch?.[1]} />}
         {active === "studio" && <ContentStudio />}
         {active === "library" && <PublishedLibrary key={hash} outcomeId={libraryMatch?.[1]} />}
-        {active === "progress" && <section className="inner-view progress-view" aria-labelledby="progress-title">
+        {active === "progress" && family.student && <div className="inner-view math-course"><FamilyReport /></div>}
+        {active === "progress" && !family.student && <section className="inner-view progress-view" aria-labelledby="progress-title">
           <p className="eyebrow">Luyện tập</p>
           <h1 id="progress-title">Tiến độ của em</h1>
           <p className="section-intro">Tiến độ bài mẫu được lưu trên thiết bị này.</p>
@@ -256,7 +280,7 @@ export function StudySpace() {
             <li key={item}><a href={"#lop-" + item}><Check size={18} /><span><strong>{lessons[item].title}</strong><small>Lớp {item} · {lessons[item].subject}</small></span><ArrowRight size={17} /></a></li>
           )}</ul> : <div className="empty-state"><BookOpen size={26} /><h2>Em chưa hoàn thành bài mẫu nào</h2><a href="#lop" className="button primary">Chọn lớp <ArrowRight size={16} /></a></div>}
         </section>}
-        <footer className="footer"><span>Grade Trail · V0.7.0</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
+        <footer className="footer"><span>Grade Trail · V0.8.0</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
       </main>
     </div>
     <dialog ref={installDialog} className="install-dialog" aria-labelledby="install-title">

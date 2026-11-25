@@ -3,6 +3,8 @@
 import { useSyncExternalStore } from "react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { gradeOneSources, gradeOneVietnamese, vietnameseRoute, vietnameseUnits } from "../lib/grade-one-vietnamese";
+import { lessonPosition } from "../lib/family-progress";
+import { useFamily } from "./family-provider";
 import { LessonPlayer } from "./lesson-player";
 
 const storageKey = "gradetrail:grade-one-vietnamese:v1";
@@ -43,8 +45,14 @@ function studyLink(id: string) {
 }
 
 export function GradeOneVietnamese({ lessonId }: { lessonId?: string }) {
-  const done = readDone(useSyncExternalStore(subscribe, snapshot, () => "[]"));
+  const guestDone = readDone(useSyncExternalStore(subscribe, snapshot, () => "[]"));
+  const family = useFamily();
+  const done = family.student
+    ? new Set(family.rows.filter((row) => row.completed && gradeOneVietnamese.some((item) => row.lesson_key === "vietnamese/" + item.id)).map((row) => row.lesson_key.slice(11)))
+    : guestDone;
   const lesson = gradeOneVietnamese.find((item) => item.id === lessonId);
+  const lessonKey = "vietnamese/" + lessonId;
+  const familyRow = family.rows.find((row) => row.lesson_key === lessonKey);
   const next = lesson && gradeOneVietnamese[gradeOneVietnamese.indexOf(lesson) + 1];
 
   if (lesson) {
@@ -57,7 +65,11 @@ export function GradeOneVietnamese({ lessonId }: { lessonId?: string }) {
       <p className="course-reference"><a href={gradeOneSources[unit.book].url} target="_blank" rel="noreferrer">
         Đối chiếu SGK · {lesson.reference}
       </a></p>
-      <LessonPlayer key={lesson.id} steps={lesson.steps} storageId={"grade-one-vietnamese:" + lesson.id} onComplete={() => markDone(lesson.id)} />
+      <LessonPlayer key={(family.student?.id ?? "guest") + ":" + lesson.id} steps={lesson.steps}
+        storageId={family.student ? undefined : "grade-one-vietnamese:" + lesson.id}
+        initialPosition={family.student ? lessonPosition(familyRow, lesson.steps.length) : undefined}
+        onComplete={family.student ? undefined : () => markDone(lesson.id)}
+        onProgress={family.student ? (position, completed, result) => family.record(lessonKey, position, completed, result) : undefined} />
       {done.has(lesson.id) && <div className="math-lesson-next">
         <span className="game-solved"><Check size={16} /> Đã hoàn thành</span>
         {next && <a className="button primary" href={studyLink(next.id)}>Bài luyện tiếp theo <ArrowRight size={16} /></a>}

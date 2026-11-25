@@ -332,3 +332,24 @@ progress { width: 100%; accent-color: var(--purple); }
 .course-sources summary { cursor: pointer; font-weight: 650; }
 .course-sources ul { padding-inline-start: 22px; }
 .course-sources a, .course-reference a { text-decoration: underline; }
+
+.topbar-actions { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.family-link { display: block; max-width: min(42vw, 240px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.family-link[aria-current="page"] { color: var(--purple-deep); }
+.family-auth { margin-top: 14px; max-width: 520px; }
+.family-form { display: grid; gap: 12px; margin-top: 12px; }
+.family-form label { display: grid; gap: 6px; font-weight: 600; }
+.family-form input, .family-form select { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--white); color: inherit; font: inherit; }
+.family-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 10px 0; overflow-wrap: anywhere; }
+.family-profiles ul { display: grid; gap: 8px; list-style: none; padding: 0; margin: 10px 0 0; }
+.family-profiles li { display: flex; gap: 8px; }
+.family-profiles li > :first-child { flex: 1; min-width: 0; justify-content: flex-start; overflow-wrap: anywhere; }
+.family-profiles li > :first-child svg { flex: none; }
+.family-profiles button[aria-pressed="true"] { color: var(--purple-deep); border-color: var(--purple-deep); }
+.family-report { margin-top: 18px; }
+.family-summary { display: grid; gap: 6px; }
+.family-summary a { text-decoration: underline; }
+.family-summary progress { width: 100%; accent-color: var(--purple-deep); }
+.family-results { margin-top: 14px; }
+.family-import-list { max-height: 230px; overflow: auto; padding-inline-start: 22px; }
+.family-save { margin-bottom: 12px; }

@@ -1,4 +1,4 @@
-# Grade Trail V0.7.0 — Grade 1 Vietnamese
+# Grade Trail V0.8.0 — Student & Parent Profiles
 
 Grade Trail là không gian tự học dành cho học sinh Việt Nam từ lớp 1 đến lớp 12. Tên gọi thể hiện lộ trình học từng bước, từ tiểu học đến hết trung học phổ thông.
 
@@ -31,6 +31,25 @@ npm start
 ```
 
 Dừng `npm run dev` trước khi chạy `npm start` nếu cổng 3000 đang được dùng. Bản build tạo thư mục `out` và tự sinh service worker dựa vào nội dung của bản build.
+
+## Tài khoản gia đình và migration V0.8.0
+
+1. Trên đúng dự án Supabase Grade Trail, mở **SQL Editor → New query** và chạy một lần file `supabase/migrations/202611250001_student_parent_profiles.sql`. Bản TXT bàn giao cùng ZIP có nguyên SQL của migration này. Có thể chạy qua Supabase CLI nếu dự án đang dùng CLI. Migration Studio đã áp dụng thì giữ nguyên. Người thiết lập Family mới vẫn chạy riêng được migration hồ sơ vì migration này không phụ thuộc bảng Studio.
+2. Trong **Authentication**, cho phép đăng ký bằng email và mật khẩu. Dùng **URL Configuration** để đặt **Site URL** thành URL HTTPS production của Grade Trail và thêm `http://localhost:3000` vào danh sách redirect nếu cần thử local. Thêm URL preview chính xác khi thử xác nhận email ở Vercel Preview. Khi bật xác nhận email, dùng email nhận được liên kết xác nhận trước khi đăng nhập.
+3. Điền hai biến trong `.env.local` hoặc **Vercel → Settings → Environment Variables**. Sau đó chạy lại dev hoặc deploy commit mới để bản xuất tĩnh nhận biến. Cấu hình ở bước 1–2 cần hoàn tất trước khi mở Family cho người dùng.
+
+| Biến môi trường | Giá trị |
+| --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Project URL trong Supabase Dashboard |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Publishable key của đúng dự án Supabase |
+
+Mở **Gia đình → Tạo tài khoản** và xác nhận email nếu dự án yêu cầu. Đăng nhập, thêm hồ sơ tên hiển thị và khối lớp, rồi chọn hồ sơ học. Tên đang học hiển thị trên thanh đầu trang. Vào **Gia đình** hoặc **Tiến độ của em** để mở báo cáo của hồ sơ đang chọn. Các màn quản lý và chế độ học trong phiên này dùng chung đăng nhập phụ huynh.
+
+- Báo cáo ghi nhận số bài hoàn thành, bước đang dở, mốc học gần nhất và câu trả lời cuối của tối đa năm bài Toán hoặc Tiếng Việt lớp 1. Học lại giữ dấu đã hoàn thành và mở một lượt luyện mới. Bài mẫu, trò chơi và ôn tập cũ tiếp tục lưu theo thiết bị.
+- Khi khách học, tiến độ lớp 1 vẫn lưu trên thiết bị. Từ hồ sơ con đã chọn, xem trước mục **Nhập tiến độ cũ trên thiết bị** và xác nhận đúng hồ sơ. Chức năng nhập chỉ đọc dữ liệu cùng địa chỉ ứng dụng và trình duyệt. Vị trí mới đã lưu trên cloud được ưu tiên và dấu hoàn thành được gộp. Chạy lại không nhân đôi kết quả. Dữ liệu cũ không chứa thời điểm và câu trả lời nên báo cáo không tạo lịch sử giả.
+- Tính năng hồ sơ dùng kết nối Supabase. Khi phiên đang mở gặp lỗi mạng trong lúc học, app hiển thị nút thử lưu lại. Hãy thử lưu thành công trước khi tải lại trang hoặc đăng xuất. Tải bài theo hồ sơ và đồng bộ khi mất mạng thuộc V0.9.0.
+- RLS giới hạn dữ liệu theo tài khoản phụ huynh. Chức năng ghi tiến độ kiểm tra quyền sở hữu ở Supabase. Ứng dụng dùng publishable key.
+- Nếu báo chưa tải được hồ sơ, kiểm tra URL, publishable key và migration ở đúng dự án, rồi bấm **Tải lại hồ sơ**. Có thể quay lại bản deploy V0.7.0 khi cần, giữ các bảng mới để bảo toàn dữ liệu gia đình.
 
 ## Kết nối Educational Content Studio với Supabase
 
@@ -75,7 +94,7 @@ Mở **Ôn tập** từ thanh điều hướng, từ bài mẫu hoặc từ ch�
 
 ## Toán lớp 1
 
-Mở **Toán lớp 1** từ trang chủ, từ bài mẫu lớp 1 hoặc từ mục **Chương trình** của lớp 1. Lộ trình MVP có 10 bài, chia thành số và thứ tự, cộng trừ và bài toán, hình học, đo lường và thời gian. Mỗi bài gồm ví dụ và 2 câu vận dụng có phản hồi. Trả lời đúng cả hai câu để hoàn thành bài. App lưu bước học và dấu hoàn thành trên trình duyệt hiện tại.
+Mở **Toán lớp 1** từ trang chủ, từ bài mẫu lớp 1 hoặc từ mục **Chương trình** của lớp 1. Lộ trình MVP có 10 bài, xếp theo thứ tự tham chiếu trong tập một và tập hai. Mỗi bài gồm ví dụ và 2 câu vận dụng có phản hồi. Trả lời đúng cả hai câu để hoàn thành bài. App lưu bước học và dấu hoàn thành trên trình duyệt hiện tại.
 
 Khu **Trò chơi Toán lớp 1** có Ghép phép tính, Đường đua số và Ghép tên các hình. Từ V0.7.0, danh sách 10 bài luyện Toán xếp theo các mốc chọn lọc của SGK Toán 1 bộ Kết nối tri thức với cuộc sống. Bài và trò chạy ngoại tuyến sau khi PWA tải xong tài nguyên.
 
@@ -83,9 +102,7 @@ Khu **Trò chơi Toán lớp 1** có Ghép phép tính, Đường đua số và 
 
 Mở **Tiếng Việt lớp 1** từ trang chủ, trang Lớp 1 hoặc trang Chương trình lớp 1. Có 13 bài luyện từ tư thế đọc, âm và dấu thanh đến ghép vần, đọc đoạn ngắn và trả lời câu hỏi. Mỗi bài hiển thị mốc đối chiếu trong sách. Bài luyện, câu hỏi và đoạn văn do Grade Trail biên soạn để luyện yêu cầu cần đạt đã đối chiếu. Xem [bảng đối chiếu nguồn và phạm vi](CURRICULUM-ALIGNMENT.md).
 
-Bài luyện, ghép chữ và tiến độ có thể dùng ngoại tuyến sau khi PWA tải xong tài nguyên. Nút **Nghe giọng đọc** cần giọng tiếng Việt mà trình duyệt cung cấp. Khi mất mạng, thiết bị cần có giọng tiếng Việt cục bộ. V0.7.0 không cần migration Supabase.
-
-**Phiên bản kế tiếp** là V0.8.0 — Student & Parent Profiles.
+Bài luyện, ghép chữ và tiến độ có thể dùng ngoại tuyến sau khi PWA tải xong tài nguyên. Nút **Nghe giọng đọc** cần giọng tiếng Việt mà trình duyệt cung cấp. Khi mất mạng, thiết bị cần có giọng tiếng Việt cục bộ. Xem phần Tài khoản gia đình để lưu tiến độ của một học sinh.
 
 ## Cài PWA và kiểm tra ngoại tuyến
 
@@ -104,7 +121,7 @@ Với repo GitHub mới và rỗng, chạy từ thư mục chứa `package.json`
 ```bash
 git init
 git add .
-git commit -m "Release Grade Trail V0.7.0"
+git commit -m "Release Grade Trail V0.8.0"
 git branch -M main
 git remote add origin https://github.com/TEN-TAI-KHOAN/TEN-REPO.git
 git push -u origin main
@@ -125,4 +142,4 @@ Nếu đã chạy migration Studio V0.3.0, không cần chạy lại. Nếu chư
 
 ## Nâng cấp tiếp theo
 
-Mốc kế tiếp theo roadmap là **V0.7.0 — Grade 1 Vietnamese**: tập đọc, âm vần, ghép chữ, giọng đọc và bài tập tương tác. Xem chi tiết trong `ROADMAP.md`.
+Mốc kế tiếp theo roadmap là **V0.9.0 — Adaptive Learning & Offline**, gồm ôn tập theo năng lực, tải bài ngoại tuyến và đồng bộ tiến độ khi kết nối trở lại. Xem chi tiết trong `ROADMAP.md`.
