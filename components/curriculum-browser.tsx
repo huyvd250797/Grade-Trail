@@ -4,6 +4,7 @@ import { practiceTopics } from "../lib/adaptive-practice";
 import { educationalGames } from "../lib/educational-games";
 import { useState } from "react";
 import { ArrowRight, BookOpen, ExternalLink, Search } from "lucide-react";
+import { vietnameseRoute } from "../lib/grade-one-vietnamese";
 import { curriculumSources, curriculumVersion, getCurriculumSubjects, normalizeCurriculumSearch, subjectKinds } from "../lib/curriculum";
 import { grades, type Grade } from "../lib/lessons";
 
@@ -56,7 +57,10 @@ export function CurriculumBrowser({ initialGrade }: { initialGrade: Grade }) {
     <div className="curriculum-toolbar">
       <p role="status">{visible.length} môn và hoạt động · {totalTopics} chủ đề hiển thị</p>
       <a href={"#lop-" + grade}>Làm bài mẫu lớp {grade} <ArrowRight size={15} /></a>
-      {grade === 1 && <a href="#toan-lop-1">Mở lộ trình Toán lớp 1 <ArrowRight size={15} /></a>}
+      {grade === 1 && <>
+        <a href="#toan-lop-1">Mở lộ trình Toán lớp 1 <ArrowRight size={15} /></a>
+        <a href={vietnameseRoute}>Mở lộ trình Tiếng Việt lớp 1 <ArrowRight size={15} /></a>
+      </>}
     </div>
     {visible.length ? <div className="curriculum-list">
       {visible.map((subject) => <article key={subject.id} className="curriculum-subject">

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ArrowDown, ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, CircleHelp, Compass, Download, Gamepad2, GraduationCap, House, Layers3, MonitorDown, Radio, Smartphone, Sprout, Target, X } from "lucide-react";
 import { ContentStudio, PublishedLibrary } from "./content-studio";
 import { GradeOneMath } from "./grade-one-math";
+import { GradeOneVietnamese } from "./grade-one-vietnamese";
+import { vietnameseRoute } from "../lib/grade-one-vietnamese";
 import { AdaptivePractice } from "./adaptive-practice";
 import { GameHub } from "./game-hub";
 import { LessonPlayer } from "./lesson-player";
@@ -103,7 +105,10 @@ function Practice({ grade, done }: { grade: Grade; done: boolean }) {
       <h1 id="lesson-title">{lesson.title}</h1>
       {done && <p className="lesson-done"><Check size={17} /> Đã hoàn thành bài này</p>}
     </div>
-    {grade === 1 && <a className="button primary" href="#toan-lop-1">Mở lộ trình Toán lớp 1 <ArrowRight size={16} /></a>}
+    {grade === 1 && <div className="math-course-actions">
+      <a className="button primary" href="#toan-lop-1">Toán lớp 1 <ArrowRight size={16} /></a>
+      <a className="button primary" href={vietnameseRoute}>Tiếng Việt lớp 1 <ArrowRight size={16} /></a>
+    </div>}
     <LessonPlayer storageId={"sample:" + grade} steps={[
       { kind: "reading", title: "Ghi nhớ", text: lesson.concept },
       { kind: "quiz", question: lesson.question, options: lesson.options, correct: lesson.correct, explanation: lesson.explanation },
@@ -125,13 +130,14 @@ export function StudySpace() {
   const reviewMatch = /^#on-tap(?:\/([a-z0-9-]+)|-(\d+))?$/.exec(hash);
   const reviewGrade = Number(reviewMatch?.[2]);
   const mathMatch = /^#toan-lop-1(?:\/([a-z0-9-]+))?$/.exec(hash);
-  const active = mathMatch ? "math" : reviewMatch ? "review" : gameMatch ? "games" : hash === "#studio" ? "studio" : libraryMatch ? "library" : curriculumMatch ? "curriculum" : hash === "#lop" || grade ? "grades" : hash === "#tien-do" ? "progress" : "home";
+  const vietnameseMatch = /^#tieng-viet-lop-1(?:\/([a-z0-9-]+))?$/.exec(hash);
+  const active = vietnameseMatch ? "vietnamese" : mathMatch ? "math" : reviewMatch ? "review" : gameMatch ? "games" : hash === "#studio" ? "studio" : libraryMatch ? "library" : curriculumMatch ? "curriculum" : hash === "#lop" || grade ? "grades" : hash === "#tien-do" ? "progress" : "home";
   const [installEvent, setInstallEvent] = useState<InstallEvent | null>(null);
   const [offlineReady, setOfflineReady] = useState(false);
   const [installed, setInstalled] = useState(false);
   const installDialog = useRef<HTMLDialogElement>(null);
   const main = useRef<HTMLElement>(null);
-  const viewKey = active === "curriculum" || active === "library" || active === "games" || active === "review" || active === "math" ? hash : grade ?? active;
+  const viewKey = active === "curriculum" || active === "library" || active === "games" || active === "review" || active === "math" || active === "vietnamese" ? hash : grade ?? active;
   const lastView = useRef(viewKey);
 
   useEffect(() => {
@@ -202,13 +208,13 @@ export function StudySpace() {
       </nav>
       <div className="sidebar-bottom">
         <button type="button" className="sidebar-install" onClick={showInstall}><Download size={18} /> Cài ứng dụng</button>
-        <p>Grade Trail <span>·</span> V0.6.1</p>
+        <p>Grade Trail <span>·</span> V0.7.0</p>
       </div>
     </aside>
     <div className="workspace">
       <header className="topbar">
         <div className="compact-brand"><Brand /></div>
-        <p className="breadcrumb"><span>Không gian học tập</span><ChevronRight size={15} />{active === "home" ? "Trang chủ" : active === "grades" ? grade ? "Lớp " + grade : "Khám phá lớp" : active === "curriculum" ? "Chương trình" : active === "studio" ? "Studio" : active === "library" ? "Học liệu" : active === "games" ? "Trò chơi" : active === "review" ? "Ôn tập" : active === "math" ? "Toán lớp 1" : "Tiến độ của em"}</p>
+        <p className="breadcrumb"><span>Không gian học tập</span><ChevronRight size={15} />{active === "home" ? "Trang chủ" : active === "grades" ? grade ? "Lớp " + grade : "Khám phá lớp" : active === "curriculum" ? "Chương trình" : active === "studio" ? "Studio" : active === "library" ? "Học liệu" : active === "games" ? "Trò chơi" : active === "review" ? "Ôn tập" : active === "math" ? "Toán lớp 1" : active === "vietnamese" ? "Tiếng Việt lớp 1" : "Tiến độ của em"}</p>
         <button className="install-button" type="button" onClick={showInstall}><Download size={16} /> <span>{installed ? "Ứng dụng" : "Cài ứng dụng"}</span></button>
       </header>
       <main ref={main} tabIndex={-1} id="noi-dung" className="main">
@@ -221,6 +227,7 @@ export function StudySpace() {
               <div className="hero-actions">
                 <a className="button primary" href={progress.lastGrade ? "#lop-" + progress.lastGrade : "#lop"}>{progress.lastGrade ? "Tiếp tục học" : "Bắt đầu học"} <ArrowRight size={18} /></a>
                 <a className="button secondary" href="#toan-lop-1">Toán lớp 1</a>
+                <a className="button secondary" href={vietnameseRoute}>Tiếng Việt lớp 1</a>
                 <a className="text-button" href="#chuong-trinh">Xem chương trình <ArrowDown size={15} /></a>
               </div>
             </div>
@@ -234,6 +241,7 @@ export function StudySpace() {
         {active === "games" && <GameHub key={hash} gameId={gameMatch?.[1]} initialGrade={isGrade(gameGrade) ? gameGrade : undefined} />}
         {active === "review" && <AdaptivePractice key={hash} initialTopic={reviewMatch?.[1]} initialGrade={isGrade(reviewGrade) ? reviewGrade : progress.lastGrade ?? 1} />}
         {active === "math" && <GradeOneMath lessonId={mathMatch?.[1]} />}
+        {active === "vietnamese" && <GradeOneVietnamese lessonId={vietnameseMatch?.[1]} />}
         {active === "studio" && <ContentStudio />}
         {active === "library" && <PublishedLibrary key={hash} outcomeId={libraryMatch?.[1]} />}
         {active === "progress" && <section className="inner-view progress-view" aria-labelledby="progress-title">
@@ -248,7 +256,7 @@ export function StudySpace() {
             <li key={item}><a href={"#lop-" + item}><Check size={18} /><span><strong>{lessons[item].title}</strong><small>Lớp {item} · {lessons[item].subject}</small></span><ArrowRight size={17} /></a></li>
           )}</ul> : <div className="empty-state"><BookOpen size={26} /><h2>Em chưa hoàn thành bài mẫu nào</h2><a href="#lop" className="button primary">Chọn lớp <ArrowRight size={16} /></a></div>}
         </section>}
-        <footer className="footer"><span>Grade Trail · V0.6.1</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
+        <footer className="footer"><span>Grade Trail · V0.7.0</span><span><Radio size={15} aria-hidden="true" /> {offlineReady ? "Sẵn sàng học ngoại tuyến" : "Học trực tiếp trên trình duyệt"}</span></footer>
       </main>
     </div>
     <dialog ref={installDialog} className="install-dialog" aria-labelledby="install-title">

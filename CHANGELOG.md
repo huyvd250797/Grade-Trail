@@ -1,5 +1,13 @@
 # Grade Trail — Changelog
 
+## V0.7.0 — Grade 1 Vietnamese
+
+- Thêm 13 bài luyện Tiếng Việt lớp 1 theo thứ tự các mốc chọn lọc của bộ Kết nối tri thức với cuộc sống. Mỗi bài dẫn đến tập sách đối chiếu.
+- Thêm thao tác ghép chữ, luyện dấu thanh, giọng đọc tiếng Việt của thiết bị và câu hỏi đọc hiểu. Lưu bước học và số bài hoàn thành trên thiết bị.
+- Rà soát 10 bài Toán lớp 1, xếp theo thứ tự bài tham chiếu trong SGK và bổ sung liên kết đối chiếu.
+- Nội dung và dữ liệu tiến độ mới được lưu ở trình duyệt. Không cần migration Supabase.
+- Phiên bản kế tiếp theo roadmap là V0.8.0 — Student & Parent Profiles.
+
 ## V0.6.1 — Grade 1 Mathematics
 
 - Thêm lộ trình MVP Toán lớp 1 gồm 10 bài và 20 câu vận dụng.

@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { ArrowLeft, ArrowRight, Check, Gamepad2 } from "lucide-react";
-import { gradeOneMath, mathUnits } from "../lib/grade-one-math";
+import { gradeOneMath, mathBooks } from "../lib/grade-one-math";
 import { LessonPlayer } from "./lesson-player";
 
 const storageKey = "gradetrail:grade-one-math:v1";
@@ -43,9 +43,12 @@ export function GradeOneMath({ lessonId }: { lessonId?: string }) {
 
   if (lesson) return <section className="inner-view math-course math-lesson" aria-labelledby="math-title">
     <a className="back-link" href="#toan-lop-1"><ArrowLeft size={16} /> Về lộ trình Toán lớp 1</a>
-    <p className="eyebrow">Toán lớp 1 · {mathUnits.find((unit) => unit.id === lesson.unit)?.title}</p>
+    <p className="eyebrow">Toán lớp 1 · {mathBooks[lesson.book].title}</p>
     <h1 id="math-title">{lesson.title}</h1>
     <p className="section-intro">{lesson.goal}</p>
+    <p className="course-reference"><a href={mathBooks[lesson.book].url} target="_blank" rel="noreferrer">
+      Đối chiếu SGK · {mathBooks[lesson.book].title} · {lesson.reference}
+    </a></p>
     <LessonPlayer key={lesson.id} steps={lesson.steps} storageId={"grade-one-math:" + lesson.id} onComplete={() => markDone(lesson.id)} />
     {done.includes(lesson.id) && <div className="math-lesson-next">
       <span className="game-solved"><Check size={16} /> Đã hoàn thành</span>
@@ -57,7 +60,7 @@ export function GradeOneMath({ lessonId }: { lessonId?: string }) {
     <div className="games-heading">
       <div><a className="back-link" href="#lop-1"><ArrowLeft size={16} /> Về lớp 1</a>
         <h1 id="math-title">Toán lớp 1</h1>
-        <p className="section-intro">Học bằng ví dụ, làm bài và chơi để củng cố kiến thức.</p></div>
+        <p className="section-intro">Luyện các bài đã chọn theo thứ tự trong bộ Kết nối tri thức với cuộc sống.</p></div>
       <div className="lesson-progress">
         <strong>{done.length}/{gradeOneMath.length} bài đã hoàn thành</strong>
         <progress aria-label="Số bài Toán lớp 1 đã hoàn thành" value={done.length} max={gradeOneMath.length} />
@@ -71,11 +74,11 @@ export function GradeOneMath({ lessonId }: { lessonId?: string }) {
       <a className="button secondary" href="#tro-choi-1"><Gamepad2 size={17} /> Trò chơi Toán lớp 1</a>
     </div>
     <div className="math-unit-grid">
-      {mathUnits.map((unit) => <article key={unit.id} className="studio-panel math-unit">
+      {Object.entries(mathBooks).map(([book, unit]) => <article key={book} className="studio-panel math-unit">
         <h2>{unit.title}</h2>
-        <ul>{gradeOneMath.filter((item) => item.unit === unit.id).map((item) =>
+        <ul>{gradeOneMath.filter((item) => item.book === book).map((item) =>
           <li key={item.id}><a href={"#toan-lop-1/" + item.id}>
-            <span><strong>{item.title}</strong><small>{item.goal}</small></span>
+            <span><strong>{item.title}</strong><small>{item.reference} · {item.goal}</small></span>
             {done.includes(item.id) ? <span className="game-solved"><Check size={16} /> <span className="math-done-text">Đã học</span></span> : <ArrowRight size={16} aria-hidden="true" />}
           </a></li>)}</ul>
       </article>)}

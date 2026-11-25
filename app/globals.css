@@ -321,3 +321,14 @@ progress { width: 100%; accent-color: var(--purple); }
 .math-unit small { display: block; color: var(--muted); margin-top: 4px; }
 .math-unit .game-solved { white-space: nowrap; }
 @media (max-width: 620px) { .math-unit-grid { grid-template-columns: 1fr; } }
+
+.vietnamese-reading { font-size: clamp(18px, 3vw, 23px); }
+.lesson-audio, .letter-tiles { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.lesson-audio [aria-live] { flex-basis: 100%; }
+.lesson-audio [aria-live]:empty { display: none; }
+.letter-result { min-height: 54px; margin: 8px 0; padding: 10px 12px; border: 1px dashed var(--line); border-radius: 10px; font-size: 20px; }
+.letter-tiles .button { min-width: 48px; min-height: 44px; }
+.course-sources { margin-top: 18px; }
+.course-sources summary { cursor: pointer; font-weight: 650; }
+.course-sources ul { padding-inline-start: 22px; }
+.course-sources a, .course-reference a { text-decoration: underline; }

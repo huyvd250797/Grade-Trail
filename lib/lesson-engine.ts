@@ -1,6 +1,14 @@
-export type ReadingStep = { kind: "reading"; title: string; text: string };
+export type ReadingStep = { kind: "reading"; title: string; text: string; audioText?: string };
 export type QuizStep = { kind: "quiz"; question: string; options: readonly string[]; correct: number; explanation: string };
-export type LessonStep = ReadingStep | QuizStep;
+export type AssemblyStep = {
+  kind: "assembly";
+  question: string;
+  tiles: readonly string[];
+  answer: readonly number[];
+  result: string;
+  explanation: string;
+};
+export type LessonStep = ReadingStep | QuizStep | AssemblyStep;
 
 export const lessonFormat = "@grade-trail/lesson-v1";
 export const lessonTemplate = `${lessonFormat}

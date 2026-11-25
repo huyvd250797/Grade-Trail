@@ -1,4 +1,4 @@
-# Grade Trail V0.6.1 — Grade 1 Mathematics
+# Grade Trail V0.7.0 — Grade 1 Vietnamese
 
 Grade Trail là không gian tự học dành cho học sinh Việt Nam từ lớp 1 đến lớp 12. Tên gọi thể hiện lộ trình học từng bước, từ tiểu học đến hết trung học phổ thông.
 
@@ -77,7 +77,15 @@ Mở **Ôn tập** từ thanh điều hướng, từ bài mẫu hoặc từ ch�
 
 Mở **Toán lớp 1** từ trang chủ, từ bài mẫu lớp 1 hoặc từ mục **Chương trình** của lớp 1. Lộ trình MVP có 10 bài, chia thành số và thứ tự, cộng trừ và bài toán, hình học, đo lường và thời gian. Mỗi bài gồm ví dụ và 2 câu vận dụng có phản hồi. Trả lời đúng cả hai câu để hoàn thành bài. App lưu bước học và dấu hoàn thành trên trình duyệt hiện tại.
 
-Khu **Trò chơi Toán lớp 1** có Ghép phép tính, Đường đua số và Ghép tên các hình. Bài và trò chạy ngoại tuyến sau khi PWA tải xong tài nguyên. Lộ trình là phần nội dung MVP được chọn, với câu hỏi và ví dụ tự biên soạn. Bản V0.6.1 không có migration mới.
+Khu **Trò chơi Toán lớp 1** có Ghép phép tính, Đường đua số và Ghép tên các hình. Từ V0.7.0, danh sách 10 bài luyện Toán xếp theo các mốc chọn lọc của SGK Toán 1 bộ Kết nối tri thức với cuộc sống. Bài và trò chạy ngoại tuyến sau khi PWA tải xong tài nguyên.
+
+## Tiếng Việt lớp 1
+
+Mở **Tiếng Việt lớp 1** từ trang chủ, trang Lớp 1 hoặc trang Chương trình lớp 1. Có 13 bài luyện từ tư thế đọc, âm và dấu thanh đến ghép vần, đọc đoạn ngắn và trả lời câu hỏi. Mỗi bài hiển thị mốc đối chiếu trong sách. Bài luyện, câu hỏi và đoạn văn do Grade Trail biên soạn để luyện yêu cầu cần đạt đã đối chiếu. Xem [bảng đối chiếu nguồn và phạm vi](CURRICULUM-ALIGNMENT.md).
+
+Bài luyện, ghép chữ và tiến độ có thể dùng ngoại tuyến sau khi PWA tải xong tài nguyên. Nút **Nghe giọng đọc** cần giọng tiếng Việt mà trình duyệt cung cấp. Khi mất mạng, thiết bị cần có giọng tiếng Việt cục bộ. V0.7.0 không cần migration Supabase.
+
+**Phiên bản kế tiếp** là V0.8.0 — Student & Parent Profiles.
 
 ## Cài PWA và kiểm tra ngoại tuyến
 
@@ -96,7 +104,7 @@ Với repo GitHub mới và rỗng, chạy từ thư mục chứa `package.json`
 ```bash
 git init
 git add .
-git commit -m "Release Grade Trail V0.6.1"
+git commit -m "Release Grade Trail V0.7.0"
 git branch -M main
 git remote add origin https://github.com/TEN-TAI-KHOAN/TEN-REPO.git
 git push -u origin main
