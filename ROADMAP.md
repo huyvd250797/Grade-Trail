@@ -7,5 +7,6 @@
 | V0.3.0 — Educational Content Studio | Hoàn thành source | Soạn, xem trước, gửi duyệt, trả góp ý và xuất bản học liệu qua Supabase. Liên kết theo yêu cầu cần đạt và hiển thị kho học liệu công khai. |
 | V0.4.0 — Interactive Lesson Engine | Hoàn thành source | Bài học theo từng bước từ Studio và bộ 12 bài mẫu, câu hỏi có phản hồi, xem trước trong Studio và tiếp tục từ tiến độ lưu trên thiết bị. |
 | V0.5.0 — Educational Games | Hoàn thành source | 12 trò ghép cặp, sắp xếp và trắc nghiệm gắn với yêu cầu cần đạt, phản hồi tức thì, lưu trạng thái hoàn thành và chơi ngoại tuyến. |
+| V0.6.0 — Adaptive Practice & Review | Hoàn thành source | 56 câu luyện tập cho 24 chủ đề, ưu tiên câu sai và câu đến hạn, giải thích tức thì và xem kết quả theo chủ đề. |
 
-Các hạng mục tiếp theo của sản phẩm gồm luyện tập và ôn tập thích ứng, trợ giảng AI có kiểm soát, tiến độ đa thiết bị, giao diện cho giáo viên và phụ huynh, cùng quy trình bảo vệ dữ liệu trẻ em và duyệt nội dung.
+Các hạng mục tiếp theo của sản phẩm gồm trợ giảng AI có kiểm soát, tiến độ đa thiết bị, giao diện cho giáo viên và phụ huynh, cùng quy trình bảo vệ dữ liệu trẻ em và duyệt nội dung.

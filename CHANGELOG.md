@@ -1,5 +1,11 @@
 # Grade Trail — Changelog
 
+## V0.6.0 — Adaptive Practice & Review
+
+- Thêm 56 câu luyện tập cho 24 chủ đề lớp 1–12, lọc lớp, môn, chủ đề và giải thích đáp án.
+- Ôn ưu tiên câu sai và câu đến hạn, lưu lịch và xem kết quả theo chủ đề trên thiết bị.
+- Đóng gói ngân hàng câu hỏi trong PWA. Không có migration mới.
+
 ## V0.5.0 — Educational Games
 
 - Thêm 12 trò chơi cho lớp 1–12, với ba dạng ghép cặp, sắp xếp và trắc nghiệm.

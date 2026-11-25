@@ -160,7 +160,7 @@ progress { width: 100%; accent-color: var(--purple); }
 @media (max-width: 865px) {
   .sidebar { inset: auto 0 0; width: auto; padding: 5px 11px calc(5px + env(safe-area-inset-bottom)); border: 0; border-top: 1px solid var(--line); }
   .sidebar > .brand, .sidebar-bottom, .breadcrumb { display: none; }
-  .nav { grid-template-columns: repeat(6,minmax(0,1fr)); gap: 4px; }
+  .nav { grid-template-columns: repeat(7,minmax(0,1fr)); gap: 4px; }
   .nav a { justify-content: center; flex-direction: column; gap: 4px; font-size: 10px; padding: 6px 3px; text-align: center; }
   .nav a svg { width: 17px; }
   .workspace { margin: 0; padding-bottom: calc(63px + env(safe-area-inset-bottom)); }
@@ -290,3 +290,21 @@ progress { width: 100%; accent-color: var(--purple); }
 .game-result > svg { color: var(--purple-deep); }
 @media (max-width: 940px) { .game-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 540px) { .game-grid { grid-template-columns: 1fr; } .nav a { font-size: 9px; padding-inline: 1px; } }
+
+.review-view { max-width: 1000px; }
+.review-filters, .review-topics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 16px; }
+.review-filters { grid-template-columns: 100px minmax(0,1fr) minmax(0,1.5fr); }
+.review-filters label { display: grid; min-width: 0; gap: 5px; font-size: 13px; font-weight: 750; }
+.review-filters select { width: 100%; min-height: 44px; padding: 7px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--white); font: inherit; text-overflow: ellipsis; }
+.review-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.review-round { display: grid; gap: 8px; max-width: 760px; margin-top: 14px; }
+.review-round fieldset { min-width: 0; }
+.review-round .lesson-progress { margin-bottom: 8px; }
+.review-round > .button { justify-self: start; }
+.review-needs { color: #9b3820; font-weight: 700; }
+.review-breakdown { padding-left: 22px; }
+@media (max-width: 540px) {
+  .review-topics { grid-template-columns: 1fr; }
+  .review-filters { grid-template-columns: minmax(70px,.65fr) minmax(0,1.35fr); }
+  .review-filters label:last-child { grid-column: 1 / -1; }
+}

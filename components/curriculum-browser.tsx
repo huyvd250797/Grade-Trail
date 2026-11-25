@@ -1,5 +1,6 @@
 "use client";
 
+import { practiceTopics } from "../lib/adaptive-practice";
 import { educationalGames } from "../lib/educational-games";
 import { useState } from "react";
 import { ArrowRight, BookOpen, ExternalLink, Search } from "lucide-react";
@@ -66,6 +67,7 @@ export function CurriculumBrowser({ initialGrade }: { initialGrade: Grade }) {
             return <li key={outcome.id}>{outcome.text}<br />
               <a className="curriculum-resource" href={"#hoc-lieu/" + outcome.id}>Học liệu theo yêu cầu này</a>
               {game && <><br /><a className="curriculum-resource" href={"#tro-choi/" + game.id}>Chơi: {game.title}</a></>}
+              {practiceTopics.some((item) => item.outcomeId === outcome.id) && <><br /><a className="curriculum-resource" href={"#on-tap/" + outcome.id}>Luyện tập chủ đề này</a></>}
             </li>;
           })}</ul>
         </details>) : <p className="curriculum-note">Chưa có chủ đề tóm lược cho mục này. Có thể xem văn bản nguồn bên dưới.</p>}

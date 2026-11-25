@@ -1,4 +1,4 @@
-# Grade Trail V0.5.0 — Educational Games
+# Grade Trail V0.6.0 — Adaptive Practice & Review
 
 Grade Trail là không gian tự học dành cho học sinh Việt Nam từ lớp 1 đến lớp 12. Tên gọi thể hiện lộ trình học từng bước, từ tiểu học đến hết trung học phổ thông.
 
@@ -64,6 +64,15 @@ Chọn **Trò chơi** trên thanh điều hướng, lọc khối lớp hoặc m�
 
 Danh sách lưu dấu hoàn thành trên trình duyệt hiện tại. Khi rời trò chơi giữa chừng, lượt đang chơi bắt đầu lại ở lần mở sau. Bộ trò chơi đã được đóng gói cùng ứng dụng, chạy ngoại tuyến sau khi PWA sẵn sàng và không cần tài khoản, Supabase hay migration mới.
 
+## Luyện tập và ôn tập thích ứng
+
+Mở **Ôn tập** từ thanh điều hướng, từ bài mẫu hoặc từ chủ đề có câu hỏi trong **Chương trình**. Bản này có 56 câu cho 24 chủ đề, hai chủ đề mỗi khối lớp. Chọn lớp, môn hoặc chủ đề để giới hạn phạm vi.
+
+- **Luyện tập** mở tất cả câu trong phạm vi đã chọn. Mỗi câu có giải thích sau khi kiểm tra đáp án.
+- **Ôn tập ưu tiên** đưa câu sai lên đầu và ôn các câu đến hạn. Nếu chưa có câu đến hạn, app đưa câu chưa luyện lên trước. Trả lời sai khiến câu hỏi đến hạn ngay. Các lần đúng liên tiếp dời lịch ôn lần lượt 1, 3, 7 và tối đa 14 ngày.
+- Kết quả xem theo lượt và theo chủ đề. Mỗi đáp án đã chấm được lưu ngay trên trình duyệt hiện tại; khi rời màn hình, lượt đang mở kết thúc nhưng đáp án đã chấm vẫn được tính. Trình duyệt chặn lưu trữ chỉ giữ kết quả trong phiên mở app.
+- Ngân hàng câu hỏi nằm trong gói PWA. Sau khi app sẵn sàng ngoại tuyến, có thể luyện và ôn trên thiết bị. Không có migration mới.
+
 ## Cài PWA và kiểm tra ngoại tuyến
 
 1. Mở bản production tại `localhost` hoặc một địa chỉ HTTPS. Khi thử trên điện thoại, dùng địa chỉ HTTPS, vì IP LAN qua HTTP có thể không đủ điều kiện đăng ký service worker.
@@ -81,7 +90,7 @@ Với repo GitHub mới và rỗng, chạy từ thư mục chứa `package.json`
 ```bash
 git init
 git add .
-git commit -m "Release Grade Trail V0.2.0"
+git commit -m "Release Grade Trail V0.6.0"
 git branch -M main
 git remote add origin https://github.com/TEN-TAI-KHOAN/TEN-REPO.git
 git push -u origin main
@@ -102,4 +111,4 @@ Nếu đã chạy migration Studio V0.3.0, không cần chạy lại. Nếu chư
 
 ## Nâng cấp tiếp theo
 
-Gửi lại ZIP phiên bản mới nhất khi tiếp tục hạng mục luyện tập và ôn tập thích ứng. Xem chi tiết trong `ROADMAP.md`.
+Gửi lại ZIP phiên bản mới nhất khi tiếp tục hạng mục trên roadmap. Xem chi tiết trong `ROADMAP.md`.
