@@ -1,5 +1,6 @@
 "use client";
 
+import { educationalGames } from "../lib/educational-games";
 import { useState } from "react";
 import { ArrowRight, BookOpen, ExternalLink, Search } from "lucide-react";
 import { curriculumSources, curriculumVersion, getCurriculumSubjects, normalizeCurriculumSearch, subjectKinds } from "../lib/curriculum";
@@ -60,7 +61,13 @@ export function CurriculumBrowser({ initialGrade }: { initialGrade: Grade }) {
         <header><h2><BookOpen size={19} aria-hidden="true" />{subject.title}</h2><span className="curriculum-kind">{subjectKinds[subject.kind]}</span></header>
         {subject.topics.length ? subject.topics.map((topic) => <details key={topic.id} className="curriculum-topic">
           <summary>{topic.title}</summary>
-          <ul>{topic.outcomes.map((outcome) => <li key={outcome.id}>{outcome.text}<br /><a className="curriculum-resource" href={"#hoc-lieu/" + outcome.id}>Học liệu theo yêu cầu này</a></li>)}</ul>
+          <ul>{topic.outcomes.map((outcome) => {
+            const game = educationalGames.find((item) => item.outcomeId === outcome.id);
+            return <li key={outcome.id}>{outcome.text}<br />
+              <a className="curriculum-resource" href={"#hoc-lieu/" + outcome.id}>Học liệu theo yêu cầu này</a>
+              {game && <><br /><a className="curriculum-resource" href={"#tro-choi/" + game.id}>Chơi: {game.title}</a></>}
+            </li>;
+          })}</ul>
         </details>) : <p className="curriculum-note">Chưa có chủ đề tóm lược cho mục này. Có thể xem văn bản nguồn bên dưới.</p>}
         <ul className="curriculum-sources" aria-label={"Nguồn đối chiếu môn " + subject.title}>
           {subject.sourceIds.map((id) => <li key={id}><a href={curriculumSources[id].url} target="_blank" rel="noreferrer">

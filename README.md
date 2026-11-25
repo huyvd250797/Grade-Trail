@@ -1,4 +1,4 @@
-# Grade Trail V0.4.0 — Interactive Lesson Engine
+# Grade Trail V0.5.0 — Educational Games
 
 Grade Trail là không gian tự học dành cho học sinh Việt Nam từ lớp 1 đến lớp 12. Tên gọi thể hiện lộ trình học từng bước, từ tiểu học đến hết trung học phổ thông.
 
@@ -58,6 +58,12 @@ Migration tạo bảng vai trò, bảng mã yêu cầu cần đạt và bảng h
 - Bài văn bản từ V0.3.x được chia theo các đoạn ngăn bằng dòng trống. Khi soạn bài tương tác trong **Studio**, mở **Soạn bài theo bước và thêm câu hỏi** để xem hoặc chèn mẫu. Dòng đầu phải là `@grade-trail/lesson-v1`. Bước đọc bắt đầu bằng `## Tên bước`; câu hỏi nằm giữa `:::quiz` và `:::`, có 2–6 đáp án, đúng một dòng `- [x]` và dòng cuối `Giải thích: …`. Nút **Xem trước** mở cùng trình học và không ghi tiến độ của học sinh.
 - Tiến độ trình học lưu cục bộ. Bài mẫu có sẵn ngoại tuyến sau khi PWA chuẩn bị xong. Kho bài đã xuất bản vẫn lấy từ Supabase khi có mạng. Không có migration mới; nội dung từng bước sử dụng trường nội dung hiện có.
 
+## Trò chơi học tập
+
+Chọn **Trò chơi** trên thanh điều hướng, lọc khối lớp hoặc mở từ bài mẫu hay từ yêu cầu cần đạt trong mục **Chương trình**. Có 12 trò, mỗi lớp một trò, thuộc ba dạng: ghép cặp, sắp xếp và trắc nghiệm. Hoàn thành khi ghép, xếp hoặc trả lời đúng toàn bộ; có thể thử lại ngay khi chọn sai và chơi lại sau khi hoàn thành.
+
+Danh sách lưu dấu hoàn thành trên trình duyệt hiện tại. Khi rời trò chơi giữa chừng, lượt đang chơi bắt đầu lại ở lần mở sau. Bộ trò chơi đã được đóng gói cùng ứng dụng, chạy ngoại tuyến sau khi PWA sẵn sàng và không cần tài khoản, Supabase hay migration mới.
+
 ## Cài PWA và kiểm tra ngoại tuyến
 
 1. Mở bản production tại `localhost` hoặc một địa chỉ HTTPS. Khi thử trên điện thoại, dùng địa chỉ HTTPS, vì IP LAN qua HTTP có thể không đủ điều kiện đăng ký service worker.
@@ -96,4 +102,4 @@ Nếu đã chạy migration Studio V0.3.0, không cần chạy lại. Nếu chư
 
 ## Nâng cấp tiếp theo
 
-Gửi lại ZIP phiên bản mới nhất và yêu cầu triển khai **V0.5.0 — Educational Games**. Xem chi tiết trong `ROADMAP.md`.
+Gửi lại ZIP phiên bản mới nhất khi tiếp tục hạng mục luyện tập và ôn tập thích ứng. Xem chi tiết trong `ROADMAP.md`.

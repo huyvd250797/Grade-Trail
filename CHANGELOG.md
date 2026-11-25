@@ -1,5 +1,12 @@
 # Grade Trail — Changelog
 
+## V0.5.0 — Educational Games
+
+- Thêm 12 trò chơi cho lớp 1–12, với ba dạng ghép cặp, sắp xếp và trắc nghiệm.
+- Liên kết trò chơi với từng yêu cầu cần đạt và bài mẫu theo lớp.
+- Thêm phản hồi tức thì, chơi lại, lọc lớp và lưu trạng thái hoàn thành trên thiết bị.
+- Trò chơi có trong bản PWA ngoại tuyến. Không có migration mới.
+
 ## V0.4.0 — Interactive Lesson Engine
 
 - Thêm trình học từng bước, câu hỏi lựa chọn có giải thích, lưu tiến độ cục bộ và học lại.
